@@ -1,2 +1,2 @@
-# competitive-programming-reference
-Competitive Programming Reference built with mkcpr
+# Competitive Programming Reference
+Built with ![mkcpr](https://github.com/searleser97/mkcpr)
