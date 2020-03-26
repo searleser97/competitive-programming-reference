@@ -1,0 +1,1 @@
+char upperCase(char c) { return c & '_'; }

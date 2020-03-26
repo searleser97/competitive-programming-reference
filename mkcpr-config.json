@@ -1,0 +1,10 @@
+{
+  "codeFolder" : "/home/san/Projects/competitive-programming-reference/Reference",
+  "templatePath" : "/home/san/Projects/competitive-programming-reference/LaTex Template/ReferenceTemplate.tex",
+  "outputFilePath" : "/home/san/Projects/competitive-programming-reference/PDF/Reference.tex",
+  "excluded" : [".vscode", "__pycache__"],
+  "columns" : 2,
+  "templatePlaceHolder" : "CODE HERE",
+  "sortBefore" : ["Coding Resources", "Data Structures"],
+  "sortAfter" : ["Extras", "Problems Solved"]
+}

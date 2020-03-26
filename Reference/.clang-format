@@ -1,0 +1,11 @@
+BasedOnStyle: Google
+AllowShortFunctionsOnASingleLine: true
+ColumnLimit : 54
+IndentWidth: 2
+AllowShortIfStatementsOnASingleLine: Always
+AllowShortBlocksOnASingleLine: true
+AllowAllConstructorInitializersOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: true
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortLambdasOnASingleLine: true
