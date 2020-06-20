@@ -14,7 +14,7 @@ struct SegmentTree {
   function<T(T, T)> F;
   // 5
   SegmentTree(int n, T val,
-      T f(T, T) = [](int a, int b) { return a + b; };)
+      T f(T, T) = [](T a, T b) { return a + b; })
       : st(2 * n, val), d(n), u(n), F(f) {
     H = sizeof(int) * 8 - __builtin_clz(N = n);
   }

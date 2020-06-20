@@ -5,8 +5,8 @@
 
 // O(lg(r - l)) [l, r]
 template <class T>
-vector<int> lowerBound(vector<T>& v, T e, int l,
-                       int r) {
+vector<int> lowerBound(vector<T>& v, int l, int r,
+                       T e) {
   int rr = r;
   while (l <= r) {
     int mid = l + (r - l) >> 1;

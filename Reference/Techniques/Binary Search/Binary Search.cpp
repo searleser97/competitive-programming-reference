@@ -12,7 +12,7 @@ if e not in v and inv = true it means that:
 // 16
 // O(lg(r - l)) [l, r]
 template <class T>
-vector<T> bSearch(vector<T> &v, T e, int l, int r,
+vector<T> bSearch(vector<T> &v, int l, int r, T e,
                   bool lower = 0, bool inv = 0) {
   int ll = l, rr = r;
   while (l <= r) {

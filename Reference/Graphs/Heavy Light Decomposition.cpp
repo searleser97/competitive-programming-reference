@@ -4,14 +4,14 @@
 typedef int T;
 vector<vector<int>> adj;
 vector<int> p, heavy, depth, root, stPos, vals;
-SegmentTree<T> st(0);
+SegmentTree<T> st(0, 0);
 // 7
 void init(int n) {
   adj.assign(n, vector<int>());
   heavy.assign(n, -1);
   vals.assign(n, 0);
   p = root = stPos = depth = heavy;
-  st = SegmentTree<T>(n);
+  st = SegmentTree<T>(n, 0);
 }
 // 4
 void addEdge(int u, int v, T val) {
@@ -33,17 +33,15 @@ int dfs(int u) {
   }
   return size;
 }
-// 12
+// 10
 // O(N)
 void initHeavyLight() {
   for (int i = 0; i < adj.size(); i++)
     if (p[i] < 0) dfs(i);
   for (int i = 0, pos = 0; i < adj.size(); i++)
     if (p[i] < 0 || heavy[p[i]] != i)
-      for (int j = i; ~j; j = heavy[j]) {
-        st.setValAt(vals[j], stPos[j] = pos++);
-        root[j] = i;
-      }
+      for (int j = i; ~j; j = heavy[j])
+        st[stPos[j] = pos++] = vals[j], root[j] = i;
   st.build();
 }
 // 13

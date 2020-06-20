@@ -12,7 +12,7 @@ struct SegmentTree {
   function<T(T, T)> F;
   // 3
   SegmentTree(int n, int neut,
-      T f(T, T) = [](int a, int b) { return a + b; };)
+      T f(T, T) = [](T a, T b) { return a + b; })
       : neutro(neut), st(2 * n, neutro), N(n), F(f) {}
   // 5
   // O(2N)

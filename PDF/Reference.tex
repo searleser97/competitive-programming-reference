@@ -20,10 +20,9 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage[inline]{enumitem}
+\usepackage{fontspec}
 
 \geometry{letterpaper, portrait, left=0.5cm, right=0.5cm, top=1.8cm, bottom=1cm}
-
-\sectionfont{\Huge\bfseries\sffamily}
 
 \setminted{
     style=tango,
@@ -61,64 +60,111 @@
 \definecolor{skobeloff}{rgb}{0.0, 0.48, 0.45}
 \definecolor{pinegreen}{rgb}{0.0, 0.47, 0.44}
 
+\newcommand{\fileTitleStyle}{\large\underline}
+
+\sectionfont{\centering\bfseries\Huge}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsubsectionfont{\centering\bfseries\Large}
+\paragraphfont{\centering\bfseries\large}
+
+\setmainfont{CMU Bright}
+
 \begin{document}
 \includepdf{"/home/san/Projects/competitive-programming-reference/LaTex Template/TitlePage/TitlePage.pdf"}
-\null
 \thispagestyle{empty}
-\newpage
-\fontfamily{lmss}
-\selectfont
+\cleardoublepage
 \begin{multicols*}{2}
-	\tableofcontents
-	\newpage
-	\cleardoublepage
-	\needspace{29\baselineskip}
-\sectionfont{\bfseries\sffamily\centering\Huge}
+    \tableofcontents
+\end{multicols*}
+\begin{multicols*}{2}
+\needspace{32\baselineskip}
+\sectionfont{\centering\bfseries\Huge}
 \vspace{1em}
 \section*{Coding Resources}
 \markboth{CODING RESOURCES}{}
 \addcontentsline{toc}{section}{Coding Resources}
 \vspace{3em}
-\subsectionfont{\bfseries\sffamily\centering\LARGE}
+\subsectionfont{\centering\bfseries\LARGE}
 \vspace{0em}
 \subsection*{C++}
 \addcontentsline{toc}{subsection}{C++}
 \vspace{2em}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Competitive Programming Template}
 \addcontentsline{toc}{subsubsection}{Competitive Programming Template}
 \begin{minted}{cpp}
-/****************************************************
-https://searleser97.gitlab.io/algorithms/template.cpp
-****************************************************/
-
 #include <bits/stdc++.h>
 using namespace std;
+#define coutc "\033[48;5;196m\033[38;5;15m"
+#define endc "\033[0m"
 #define endl '\n'
-#define forr(_, x, n) for (int _ = x; _ > n; _--)
-#define fos(_, x, n, s) for (int _ = x; _ < n; _ += s)
-#define forn(_, x, n) fos(_, x, n, 1)
-#define rep(_, n) forn(_, 0, n)
+#define M(_1, _2, _3, _4, NAME, ...) NAME
+#define rep(...) \
+  M(__VA_ARGS__, rep4, rep3, rep2, rep1)(__VA_ARGS__)
+#define rep4(_, x, n, s) \
+  for (int _ = x; (s < 0) ? _ > n : _ < n; _ += s)
+#define rep3(_, x, n) rep4(_, x, n, (x < n ? 1 : -1))
+#define rep2(_, n) rep3(_, 0, n)
+#define rep1(n) rep2(i, n)
 #define fi first
 #define se second
 #define pb push_back
-#define pairii pair<int, int>
+#define pii pair<int, int>
 #define all(x) x.begin(), x.end()
-#define cerr(s) cerr << "\033[48;5;196m\033[38;5;15m" << s << "\033[0m"
-// typedef __int128_t lli;
-typedef long long int li;
-typedef long double ld;
+#define len(x) int(x.size())
+#define lli __int128_t
+#define li long long int
+#define ld long double
+#ifdef DEBUG
 \end{minted}
 \vspace{-12pt}
-\needspace{12\baselineskip}
+\needspace{3\baselineskip}
+\begin{minted}{cpp}
+ostream &operator<<(ostream &o, pair<auto, auto> p) {
+  return o << "(" << p.fi << ", " << p.se << ")";
+}
+\end{minted}
+\vspace{-12pt}
+\needspace{4\baselineskip}
+\begin{minted}{cpp}
+ostream &operator<<(ostream &o, vector<auto> v) {
+  rep(i, len(v)) o << setw(7) << right << v[i];
+  return o << endc << endl << coutc;
+}
+\end{minted}
+\vspace{-12pt}
+\needspace{4\baselineskip}
+\begin{minted}{cpp}
+ostream &operator<<(ostream &o, map<auto, auto> m) {
+  for (auto &kv : m) o << kv;
+  return o;
+}
+\end{minted}
+\vspace{-12pt}
+\needspace{7\baselineskip}
+\begin{minted}{cpp}
+void debug(const auto &e, const auto &... r) {
+  cerr << coutc << e;
+  ((cerr << " " << r), ..., (cerr << endc << endl));
+}
+#else
+#define debug(...)
+#endif
+\end{minted}
+\vspace{-12pt}
+\needspace{3\baselineskip}
 \begin{minted}{cpp}
 void _main(int tc) {
-  
-}
 
+}
+\end{minted}
+\vspace{-12pt}
+\needspace{7\baselineskip}
+\begin{minted}{cpp}
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0);
-  _main(0); return 0;
+  _main(0), exit(0);
   int tc;
   cin >> tc;
   rep(i, tc) _main(i + 1);
@@ -126,7 +172,8 @@ int main() {
 \end{minted}
 
 \needspace{4\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Include All Libraries}
 \addcontentsline{toc}{subsubsection}{Include All Libraries}
 \begin{minted}{cpp}
@@ -135,7 +182,8 @@ using namespace std;
 \end{minted}
 
 \needspace{6\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{IO Optimization}
 \addcontentsline{toc}{subsubsection}{IO Optimization}
 \begin{minted}{cpp}
@@ -146,7 +194,8 @@ int main() {
 \end{minted}
 
 \needspace{12\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Number To String}
 \addcontentsline{toc}{subsubsection}{Number To String}
 \begin{minted}{cpp}
@@ -162,8 +211,37 @@ int main() {
 }
 \end{minted}
 
+\needspace{9\baselineskip}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
+\subsubsection*{Ordered Set}
+\addcontentsline{toc}{subsubsection}{Ordered Set}
+\begin{minted}{cpp}
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+
+#define ordered_set                            \
+  tree<int, null_type, less<int>, rb_tree_tag, \
+       tree_order_statistics_node_update>
+\end{minted}
+\vspace{-12pt}
+\needspace{9\baselineskip}
+\begin{minted}{cpp}
+int main() {
+  vector<int> v = {3, 1, 5, 2};
+  ordered_set os(v.begin(), v.end());
+  // prints 3 which is the element in index 2
+  cout << *(os.find_by_order(2)) << endl;
+  // prints 2 which is the number of items
+  // strictly smaller than 3
+  cout << os.order_of_key(3)  << endl;
+}
+\end{minted}
+
 \needspace{20\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Output Format}
 \addcontentsline{toc}{subsubsection}{Output Format}
 \begin{minted}{cpp}
@@ -188,7 +266,8 @@ int main() {
 \end{minted}
 
 \needspace{12\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Permutations}
 \addcontentsline{toc}{subsubsection}{Permutations}
 \begin{minted}{cpp}
@@ -205,7 +284,8 @@ vector<T> permutations(T v) {
 \end{minted}
 
 \needspace{11\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Print Vector}
 \addcontentsline{toc}{subsubsection}{Print Vector}
 \begin{minted}{cpp}
@@ -221,31 +301,31 @@ void printv(vector<int> v) {
 }
 \end{minted}
 
-\needspace{6\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
-\subsubsection*{Priority Queue Of Object}
-\addcontentsline{toc}{subsubsection}{Priority Queue Of Object}
+\needspace{5\baselineskip}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
+\subsubsection*{Priority Queue With Given Comparator Function}
+\addcontentsline{toc}{subsubsection}{Priority Queue With Given Comparator Function}
 \begin{minted}{cpp}
 struct Object {
-  char first;
-  int second;
+  int x, y;
 };
 \end{minted}
 \vspace{-12pt}
-\needspace{8\baselineskip}
+\needspace{7\baselineskip}
 \begin{minted}{cpp}
 int main() {
   auto cmp = [](const Object& a, const Object& b) {
-    return a.second > b.second;
+    return a.x > b.x;
   };
   priority_queue<Object, vector<Object>,
-                 decltype(cmp)>
-      pq(cmp);
+                 decltype(cmp)> pq(cmp);
 }
 \end{minted}
 
 \needspace{10\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Random}
 \addcontentsline{toc}{subsubsection}{Random}
 \begin{minted}{cpp}
@@ -267,8 +347,9 @@ double random(double min, double max) {  // [min, max)
 }
 \end{minted}
 
-\needspace{10\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\needspace{9\baselineskip}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Read Line}
 \addcontentsline{toc}{subsubsection}{Read Line}
 \begin{minted}{cpp}
@@ -276,15 +357,14 @@ double random(double min, double max) {  // [min, max)
 // 'getline' just use getline and split
 string input() {
   string ans;
-  cin >> ws;
-  cin.ignore(numeric_limits<streamsize>::max(), '\n');
   getline(cin, ans);
   return ans;
 }
 \end{minted}
 
 \needspace{12\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Secure Hash}
 \addcontentsline{toc}{subsubsection}{Secure Hash}
 \begin{minted}{cpp}
@@ -301,7 +381,8 @@ struct myhash {
 \end{minted}
 
 \needspace{6\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Set of Object}
 \addcontentsline{toc}{subsubsection}{Set of Object}
 \begin{minted}{cpp}
@@ -322,7 +403,20 @@ int main() {
 \end{minted}
 
 \needspace{6\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
+\subsubsection*{Set With Given Comparator Function}
+\addcontentsline{toc}{subsubsection}{Set With Given Comparator Function}
+\begin{minted}{cpp}
+int main() {
+  auto comp = [](int x, int y) { return x < y; };
+  set<int, decltype(comp)> myset(comp);
+}
+\end{minted}
+
+\needspace{6\baselineskip}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Sort Vector Of Object}
 \addcontentsline{toc}{subsubsection}{Sort Vector Of Object}
 \begin{minted}{cpp}
@@ -348,7 +442,8 @@ int main() {
 \end{minted}
 
 \needspace{5\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Sort Vector of Pairs}
 \addcontentsline{toc}{subsubsection}{Sort Vector of Pairs}
 \begin{minted}{cpp}
@@ -359,7 +454,8 @@ sort(pairs.begin(), pairs.end());
 \end{minted}
 
 \needspace{10\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Split String}
 \addcontentsline{toc}{subsubsection}{Split String}
 \begin{minted}{cpp}
@@ -372,7 +468,8 @@ vector<string> split(string str, char token) {
 \end{minted}
 
 \needspace{13\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{String To Int}
 \addcontentsline{toc}{subsubsection}{String To Int}
 \begin{minted}{cpp}
@@ -389,8 +486,21 @@ int main() {
 }
 \end{minted}
 
+\needspace{6\baselineskip}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
+\subsubsection*{Substring}
+\addcontentsline{toc}{subsubsection}{Substring}
+\begin{minted}{cpp}
+// [l, r)
+string substr(string &s, int l, int r) {
+  return string(s.begin() + l, s.begin() + r);
+}
+\end{minted}
+
 \needspace{5\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Typedef}
 \addcontentsline{toc}{subsubsection}{Typedef}
 \begin{minted}{cpp}
@@ -400,7 +510,8 @@ typedef int T;
 \end{minted}
 
 \needspace{11\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Unordered Map with pair as key}
 \addcontentsline{toc}{subsubsection}{Unordered Map with pair as key}
 \begin{minted}{cpp}
@@ -418,19 +529,20 @@ struct pairhash {
 \needspace{5\baselineskip}
 \begin{minted}{cpp}
 int main() {
-  unordered_map<pair<int, int>, T, hash_pair> um;
+  unordered_map<pair<int, int>, T, pairhash> um;
   um[{1, 2}] = 5;
   cout << um[{1, 2}] << endl;
 }
 \end{minted}
 
 \needspace{8\baselineskip}
-\subsectionfont{\bfseries\sffamily\centering\LARGE}
+\subsectionfont{\centering\bfseries\LARGE}
 \vspace{0em}
 \subsection*{Python}
 \addcontentsline{toc}{subsection}{Python}
 \vspace{2em}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Combinations}
 \addcontentsline{toc}{subsubsection}{Combinations}
 \begin{minted}{py}
@@ -440,7 +552,8 @@ print(list(itertools.combinations([1, 2, 3], 3)))
 \end{minted}
 
 \needspace{17\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Fast IO}
 \addcontentsline{toc}{subsubsection}{Fast IO}
 \begin{minted}{py}
@@ -463,7 +576,8 @@ numbers = list(map(int, stdin.readline().split()))
 \end{minted}
 
 \needspace{4\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Permutations}
 \addcontentsline{toc}{subsubsection}{Permutations}
 \begin{minted}{py}
@@ -473,7 +587,8 @@ print(list(itertools.permutations([1, 2, 3])))
 \end{minted}
 
 \needspace{15\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Random}
 \addcontentsline{toc}{subsubsection}{Random}
 \begin{minted}{py}
@@ -493,7 +608,8 @@ random.shuffle(li)
 \end{minted}
 
 \needspace{7\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Sort List}
 \addcontentsline{toc}{subsubsection}{Sort List}
 \begin{minted}{py}
@@ -505,7 +621,8 @@ ol = sorted(li)
 \end{minted}
 
 \needspace{7\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Sort List Of Object}
 \addcontentsline{toc}{subsubsection}{Sort List Of Object}
 \begin{minted}{py}
@@ -526,14 +643,36 @@ li.sort(key = lambda x: (x.first, x.second, x.third), reverse=False)
 
 \end{minted}
 
-\needspace{10\baselineskip}
-\sectionfont{\bfseries\sffamily\centering\Huge}
+\needspace{20\baselineskip}
+\sectionfont{\centering\bfseries\Huge}
 \vspace{1em}
 \section*{BITs Manipulation}
 \markboth{BITS MANIPULATION}{}
 \addcontentsline{toc}{section}{BITs Manipulation}
 \vspace{3em}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
+\subsection*{All Possible Subsets}
+\addcontentsline{toc}{subsection}{All Possible Subsets}
+\begin{minted}{cpp}
+// O(2^n)
+vector<vector<int>> allSubsets(vector<int>& nums) {
+  vector<vector<int>> ans;
+  int limit = 1 << nums.size();
+  for (int i = 0; i < limit; i++) {
+    vector<int> aux;
+    for (int j = 0; j < nums.size(); j++) {
+      if (i & (1 << j)) aux.push_back(nums[j]);
+    }
+    ans.push_back(aux);
+  }
+  return ans;
+}
+\end{minted}
+
+\needspace{6\baselineskip}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Bit Count}
 \addcontentsline{toc}{subsection}{Bit Count}
 \begin{minted}{cpp}
@@ -552,7 +691,8 @@ int bitCount(int n) {
 \end{minted}
 
 \needspace{13\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Bits To Int}
 \addcontentsline{toc}{subsection}{Bits To Int}
 \begin{minted}{cpp}
@@ -569,7 +709,8 @@ lli bitsToInt(string bits, bool isneg) {
 \end{minted}
 
 \needspace{8\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Count Leading Zeroes}
 \addcontentsline{toc}{subsection}{Count Leading Zeroes}
 \begin{minted}{cpp}
@@ -591,7 +732,8 @@ int clz(int n) {
 \end{minted}
 
 \needspace{8\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Count Set Bits}
 \addcontentsline{toc}{subsection}{Count Set Bits}
 \begin{minted}{cpp}
@@ -612,7 +754,8 @@ int popCount(int n) {
 \end{minted}
 
 \needspace{8\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Count Trailing Zeroes}
 \addcontentsline{toc}{subsection}{Count Trailing Zeroes}
 \begin{minted}{cpp}
@@ -634,7 +777,8 @@ int ctz(int n) {
 \end{minted}
 
 \needspace{3\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Divide By 2}
 \addcontentsline{toc}{subsection}{Divide By 2}
 \begin{minted}{cpp}
@@ -642,7 +786,8 @@ int divideBy2(int n) { return n >> 1; }
 \end{minted}
 
 \needspace{3\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Is Even}
 \addcontentsline{toc}{subsection}{Is Even}
 \begin{minted}{cpp}
@@ -650,7 +795,8 @@ bool isEven(int n) { return ~n & 1; }
 \end{minted}
 
 \needspace{6\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Is i-th Bit Set}
 \addcontentsline{toc}{subsection}{Is i-th Bit Set}
 \begin{minted}{cpp}
@@ -660,7 +806,8 @@ bool isIthBitSet(int n, int i) {
 \end{minted}
 
 \needspace{3\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Is Odd}
 \addcontentsline{toc}{subsection}{Is Odd}
 \begin{minted}{cpp}
@@ -668,7 +815,8 @@ bool isOdd(int n) { return n & 1; }
 \end{minted}
 
 \needspace{3\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Is Power Of 2}
 \addcontentsline{toc}{subsection}{Is Power Of 2}
 \begin{minted}{cpp}
@@ -676,7 +824,8 @@ bool isPowerOf2(int n) { return n && !(n & (n - 1)); }
 \end{minted}
 
 \needspace{3\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Least Significant Set Bit}
 \addcontentsline{toc}{subsection}{Least Significant Set Bit}
 \begin{minted}{cpp}
@@ -684,7 +833,8 @@ int lsb(int n) { return n & -n; }
 \end{minted}
 
 \needspace{6\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Log2}
 \addcontentsline{toc}{subsection}{Log2}
 \begin{minted}{cpp}
@@ -703,7 +853,8 @@ int Log2(int n) {
 \end{minted}
 
 \needspace{5\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Modulo With Power Of 2}
 \addcontentsline{toc}{subsection}{Modulo With Power Of 2}
 \begin{minted}{cpp}
@@ -712,7 +863,8 @@ int mod(int a, int b) { return a & (b - 1); }
 \end{minted}
 
 \needspace{6\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Most Significant Set Bit}
 \addcontentsline{toc}{subsection}{Most Significant Set Bit}
 \begin{minted}{cpp}
@@ -722,7 +874,8 @@ int msb(int n) {
 \end{minted}
 
 \needspace{3\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Multiply By 2}
 \addcontentsline{toc}{subsection}{Multiply By 2}
 \begin{minted}{cpp}
@@ -730,7 +883,8 @@ int multiplyBy2(int n) { return n << 1; }
 \end{minted}
 
 \needspace{3\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{One's Complement}
 \addcontentsline{toc}{subsection}{One's Complement}
 \begin{minted}{cpp}
@@ -738,7 +892,8 @@ int onesComplement(int n) { return ~n; }
 \end{minted}
 
 \needspace{10\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Parity Check}
 \addcontentsline{toc}{subsection}{Parity Check}
 \begin{minted}{cpp}
@@ -759,7 +914,8 @@ bool parityCheck(int n) {
 \end{minted}
 
 \needspace{8\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Print Bits}
 \addcontentsline{toc}{subsection}{Print Bits}
 \begin{minted}{cpp}
@@ -771,7 +927,8 @@ void printBits(int n) {
 \end{minted}
 
 \needspace{3\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Set i-th Bit}
 \addcontentsline{toc}{subsection}{Set i-th Bit}
 \begin{minted}{cpp}
@@ -779,7 +936,8 @@ int setIthBit(int n, int i) { return n | (1 << i); }
 \end{minted}
 
 \needspace{8\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Swap Integer Variables}
 \addcontentsline{toc}{subsection}{Swap Integer Variables}
 \begin{minted}{cpp}
@@ -791,7 +949,8 @@ void swap(int &a, int &b) {
 \end{minted}
 
 \needspace{3\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{To Lower Case}
 \addcontentsline{toc}{subsection}{To Lower Case}
 \begin{minted}{cpp}
@@ -799,7 +958,8 @@ char lowerCase(char c) { return c | ' '; }
 \end{minted}
 
 \needspace{3\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{To Upper Case}
 \addcontentsline{toc}{subsection}{To Upper Case}
 \begin{minted}{cpp}
@@ -807,7 +967,8 @@ char upperCase(char c) { return c & '_'; }
 \end{minted}
 
 \needspace{3\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Toggle Case}
 \addcontentsline{toc}{subsection}{Toggle Case}
 \begin{minted}{cpp}
@@ -815,7 +976,8 @@ char toggleCase(char c) { return c ^ ' '; }
 \end{minted}
 
 \needspace{6\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Toggle i-th Bit}
 \addcontentsline{toc}{subsection}{Toggle i-th Bit}
 \begin{minted}{cpp}
@@ -825,7 +987,8 @@ int toggleIthBit(int n, int i) {
 \end{minted}
 
 \needspace{3\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Two's Complement}
 \addcontentsline{toc}{subsection}{Two's Complement}
 \begin{minted}{cpp}
@@ -833,7 +996,8 @@ int twosComplement(int n) { return ~n + 1; }
 \end{minted}
 
 \needspace{6\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Unset i-th Bit}
 \addcontentsline{toc}{subsection}{Unset i-th Bit}
 \begin{minted}{cpp}
@@ -843,7 +1007,8 @@ int unsetIthBit(int n, int i) {
 \end{minted}
 
 \needspace{11\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{XOR From 1 To N}
 \addcontentsline{toc}{subsection}{XOR From 1 To N}
 \begin{minted}{cpp}
@@ -858,18 +1023,19 @@ int xorToN(int n) {
 \end{minted}
 
 \needspace{17\baselineskip}
-\sectionfont{\bfseries\sffamily\centering\Huge}
+\sectionfont{\centering\bfseries\Huge}
 \vspace{1em}
 \section*{Geometry}
 \markboth{GEOMETRY}{}
 \addcontentsline{toc}{section}{Geometry}
 \vspace{3em}
-\subsectionfont{\bfseries\sffamily\centering\LARGE}
+\subsectionfont{\centering\bfseries\LARGE}
 \vspace{0em}
 \subsection*{Data Structures}
 \addcontentsline{toc}{subsection}{Data Structures}
 \vspace{2em}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Circle}
 \addcontentsline{toc}{subsubsection}{Circle}
 \begin{minted}{cpp}
@@ -884,7 +1050,8 @@ struct Circle {
 \end{minted}
 
 \needspace{11\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Point}
 \addcontentsline{toc}{subsubsection}{Point}
 \begin{minted}{cpp}
@@ -1002,12 +1169,15 @@ struct Point {
   }
 \end{minted}
 \vspace{-12pt}
-\needspace{5\baselineskip}
+\needspace{7\baselineskip}
 \begin{minted}{cpp}
-  // ans > 0 p is on the left
-  // ans < 0 p is on the right
-  // ans == 0 p has our same direction
-  ld positionOf(const Point &p) { return cross(p); }
+  // 1 p is on the left
+  // -1 p is on the right
+  // 0 p has our same direction
+  ld positionOf(const Point &p) {
+    short pos = cross(p);
+    return lt(pos, 0) ? -1 : gt(pos, 0);
+  }
 };
 \end{minted}
 \vspace{-12pt}
@@ -1026,7 +1196,8 @@ ostream &operator<<(ostream &os, const Point &p) {
 \end{minted}
 
 \needspace{3\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Intersection Points Of Segments In A Plane}
 \addcontentsline{toc}{subsection}{Intersection Points Of Segments In A Plane}
 \begin{minted}{cpp}
@@ -1042,7 +1213,8 @@ vector<Point> intersections(
 \end{minted}
 
 \needspace{8\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Is Point In Line}
 \addcontentsline{toc}{subsection}{Is Point In Line}
 \begin{minted}{cpp}
@@ -1054,7 +1226,8 @@ bool isPointInLine(Point& a, Point& b, Point& p) {
 \end{minted}
 
 \needspace{9\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Is Point In Segment}
 \addcontentsline{toc}{subsection}{Is Point In Segment}
 \begin{minted}{cpp}
@@ -1067,27 +1240,29 @@ bool isPointInSegment(Point& a, Point& b, Point& p) {
 \end{minted}
 
 \needspace{16\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Is Point Inside Polygon}
 \addcontentsline{toc}{subsection}{Is Point Inside Polygon}
 \begin{minted}{cpp}
 // assumes the polygon is given counter-clockwise
 // if point is exactly in edge, it's considered inside
-// change "gt" to "gte" to not consider it inside.
+// change "0 >" to "0 >=" to not consider it inside.
 #include "Data Structures/Point.cpp"
 
 bool isPointInPolygon(vector<Point> &ps, Point &p) {
-  assert(ps.size() > 2);
+  assert(ps.size() >= 3);
   for (int i = 0; i < ps.size(); i++)
-    if (gt(0, (ps[(i + 1) % ps.size()] - ps[i])
-                  .positionOf(p - ps[i])))
+    if (0 > (ps[(i + 1) % ps.size()] - ps[i])
+                .positionOf(p - ps[i]))
       return false;
   return true;
 }
 \end{minted}
 
 \needspace{14\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Line-Line Intersection}
 \addcontentsline{toc}{subsection}{Line-Line Intersection}
 \begin{minted}{cpp}
@@ -1105,7 +1280,8 @@ pair<int, Point> llintersection(Point& a, Point& b,
 \end{minted}
 
 \needspace{9\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Line-Segment Intersection}
 \addcontentsline{toc}{subsection}{Line-Segment Intersection}
 \begin{minted}{cpp}
@@ -1134,7 +1310,8 @@ pair<int, Point> lsintersection(Point& a, Point& b,
 \end{minted}
 
 \needspace{5\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Max Interval Overlap}
 \addcontentsline{toc}{subsection}{Max Interval Overlap}
 \begin{minted}{cpp}
@@ -1197,7 +1374,8 @@ int maxOverlap(vector<Interval> &arr) {
 \end{minted}
 
 \needspace{11\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Point Projection On Line}
 \addcontentsline{toc}{subsection}{Point Projection On Line}
 \begin{minted}{cpp}
@@ -1212,7 +1390,8 @@ Point projectionOnLine(Point& a, Point& b, Point& p) {
 \end{minted}
 
 \needspace{11\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Point Reflection On Line}
 \addcontentsline{toc}{subsection}{Point Reflection On Line}
 \begin{minted}{cpp}
@@ -1227,7 +1406,8 @@ Point reflectionOnLine(Point& a, Point& b, Point& p) {
 \end{minted}
 
 \needspace{8\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Point-Line Distance}
 \addcontentsline{toc}{subsection}{Point-Line Distance}
 \begin{minted}{cpp}
@@ -1239,7 +1419,8 @@ ld pointLineDist(Point& a, Point& b, Point& p) {
 \end{minted}
 
 \needspace{9\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Point-Line Distance (Signed)}
 \addcontentsline{toc}{subsection}{Point-Line Distance (Signed)}
 \begin{minted}{cpp}
@@ -1252,7 +1433,8 @@ ld pointLineDist(Point& a, Point& b, Point& p) {
 \end{minted}
 
 \needspace{10\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Segment-Segment Intersection}
 \addcontentsline{toc}{subsection}{Segment-Segment Intersection}
 \begin{minted}{cpp}
@@ -1287,7 +1469,8 @@ pair<int, Point> ssintersection(Point a, Point b,
 \end{minted}
 
 \needspace{11\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Sort Points Along Line With Direction}
 \addcontentsline{toc}{subsection}{Sort Points Along Line With Direction}
 \begin{minted}{cpp}
@@ -1302,18 +1485,19 @@ void sortAlongLine(Point& a, Point& b,
 \end{minted}
 
 \needspace{16\baselineskip}
-\sectionfont{\bfseries\sffamily\centering\Huge}
+\sectionfont{\centering\bfseries\Huge}
 \vspace{1em}
 \section*{Graphs}
 \markboth{GRAPHS}{}
 \addcontentsline{toc}{section}{Graphs}
 \vspace{3em}
-\subsectionfont{\bfseries\sffamily\centering\LARGE}
+\subsectionfont{\centering\bfseries\LARGE}
 \vspace{0em}
 \subsection*{Data Structures}
 \addcontentsline{toc}{subsection}{Data Structures}
 \vspace{2em}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Union Find}
 \addcontentsline{toc}{subsubsection}{Union Find}
 \begin{minted}{cpp}
@@ -1364,7 +1548,8 @@ struct UnionFind {
 \end{minted}
 
 \needspace{11\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Union Find (Partially Persistent)}
 \addcontentsline{toc}{subsubsection}{Union Find (Partially Persistent)}
 \begin{minted}{cpp}
@@ -1435,7 +1620,8 @@ struct UnionFind {
 \end{minted}
 
 \needspace{9\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Articulation Points And Bridges}
 \addcontentsline{toc}{subsection}{Articulation Points And Bridges}
 \begin{minted}{cpp}
@@ -1498,7 +1684,8 @@ void APB() {
 \end{minted}
 
 \needspace{7\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Connected Components}
 \addcontentsline{toc}{subsection}{Connected Components}
 \begin{minted}{cpp}
@@ -1551,7 +1738,8 @@ vector<vector<int>> connectedComponents() {
 \end{minted}
 
 \needspace{7\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Flood Fill}
 \addcontentsline{toc}{subsection}{Flood Fill}
 \begin{minted}{cpp}
@@ -1584,7 +1772,8 @@ void floodFill() {
 \end{minted}
 
 \needspace{9\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Heavy Light Decomposition}
 \addcontentsline{toc}{subsection}{Heavy Light Decomposition}
 \begin{minted}{cpp}
@@ -1593,7 +1782,7 @@ void floodFill() {
 typedef int T;
 vector<vector<int>> adj;
 vector<int> p, heavy, depth, root, stPos, vals;
-SegmentTree<T> st(0);
+SegmentTree<T> st(0, 0);
 \end{minted}
 \vspace{-12pt}
 \needspace{7\baselineskip}
@@ -1603,7 +1792,7 @@ void init(int n) {
   heavy.assign(n, -1);
   vals.assign(n, 0);
   p = root = stPos = depth = heavy;
-  st = SegmentTree<T>(n);
+  st = SegmentTree<T>(n, 0);
 }
 \end{minted}
 \vspace{-12pt}
@@ -1633,7 +1822,7 @@ int dfs(int u) {
 }
 \end{minted}
 \vspace{-12pt}
-\needspace{12\baselineskip}
+\needspace{10\baselineskip}
 \begin{minted}{cpp}
 // O(N)
 void initHeavyLight() {
@@ -1641,10 +1830,8 @@ void initHeavyLight() {
     if (p[i] < 0) dfs(i);
   for (int i = 0, pos = 0; i < adj.size(); i++)
     if (p[i] < 0 || heavy[p[i]] != i)
-      for (int j = i; ~j; j = heavy[j]) {
-        st.setValAt(vals[j], stPos[j] = pos++);
-        root[j] = i;
-      }
+      for (int j = i; ~j; j = heavy[j])
+        st[stPos[j] = pos++] = vals[j], root[j] = i;
   st.build();
 }
 \end{minted}
@@ -1689,7 +1876,8 @@ T query(int u, int v) {
 \end{minted}
 
 \needspace{6\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Is Bipartite}
 \addcontentsline{toc}{subsection}{Is Bipartite}
 \begin{minted}{cpp}
@@ -1731,17 +1919,18 @@ bool isBipartite() {
 \end{minted}
 
 \needspace{10\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Lowest Common Ancestor}
 \addcontentsline{toc}{subsection}{Lowest Common Ancestor}
 \begin{minted}{cpp}
-// st = sparse table, p = parent
-typedef pair<int, int> T;
-int neutro = 0;
-vector<vector<T>> st;
-vector<int> first;
-vector<T> tour;
+// p = parent
+#include "../Ranges/Data Structures/Sparse Table.cpp"
+typedef pair<int, int> pairii;
+vector<int> firstPos;
+vector<pair<int, int>> tour;
 vector<vector<int>> adj;
+SparseTable<pairii> st;
 
 void init(int N) { adj.assign(N, vector<int>()); }
 \end{minted}
@@ -1752,27 +1941,13 @@ void addEdge(int u, int v) {
   adj[u].push_back(v);
   adj[v].push_back(u);
 }
-
-T F(T a, T b) { return a.first < b.first ? a : b; }
 \end{minted}
 \vspace{-12pt}
-\needspace{9\baselineskip}
+\needspace{10\baselineskip}
 \begin{minted}{cpp}
-void build() {
-  st.assign(log2(tour.size()),
-            vector<T>(tour.size()));
-  st[0] = tour;
-  for (int i = 1; (1 << i) <= tour.size(); i++)
-    for (int j = 0; j + (1 << i) <= tour.size(); j++)
-      st[i][j] = F(st[i - 1][j],
-                   st[i - 1][j + (1 << (i - 1))]);
-}
-\end{minted}
-\vspace{-12pt}
-\needspace{9\baselineskip}
-\begin{minted}{cpp}
+// O(N)
 void eulerTour(int u, int p, int h) {
-  first[u] = tour.size();
+  firstPos[u] = tour.size();
   tour.push_back({h, u});
   for (int v : adj[u])
     if (v != p) {
@@ -1782,33 +1957,36 @@ void eulerTour(int u, int p, int h) {
 }
 \end{minted}
 \vspace{-12pt}
-\needspace{8\baselineskip}
+\needspace{11\baselineskip}
 \begin{minted}{cpp}
 // O(N * lg(N))
 void preprocess() {
   tour.clear();
-  first.assign(adj.size(), -1);
+  firstPos.assign(adj.size(), -1);
   vector<int> roots = {0};
   for (auto &root : roots) eulerTour(root, -1, 0);
-  build();
+  st = SparseTable<pairii>(
+      tour, [](pairii a, pairii b) {
+        return a.first < b.first ? a : b;
+      });
 }
 \end{minted}
 \vspace{-12pt}
-\needspace{7\baselineskip}
+\needspace{6\baselineskip}
 \begin{minted}{cpp}
 // O(1)
 int lca(int u, int v) {
-  int l = min(first[u], first[v]);
-  int r = max(first[u], first[v]);
-  int i = log2(r - l + 1);
-  return F(st[i][l], st[i][r + 1 - (1 << i)]).second;
+  int l = min(firstPos[u], firstPos[v]);
+  int r = max(firstPos[u], firstPos[v]);
+  return st.query(l, r).second;
 }
 \end{minted}
 
 \needspace{11\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
-\subsection*{Minimum Spanning Tree Kruskal}
-\addcontentsline{toc}{subsection}{Minimum Spanning Tree Kruskal}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
+\subsection*{Minimum Spanning Tree (Kruskal)}
+\addcontentsline{toc}{subsection}{Minimum Spanning Tree (Kruskal)}
 \begin{minted}{cpp}
 // N = number of nodes, Wedge = Weighted Edge
 #include "Data Structures/Union Find.cpp"
@@ -1854,9 +2032,10 @@ T kruskal() {
 \end{minted}
 
 \needspace{15\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
-\subsection*{Minimum Spanning Tree Prim}
-\addcontentsline{toc}{subsection}{Minimum Spanning Tree Prim}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
+\subsection*{Minimum Spanning Tree (Prim)}
+\addcontentsline{toc}{subsection}{Minimum Spanning Tree (Prim)}
 \begin{minted}{cpp}
 // st = spanning tree, p = parent
 // vis = visited, dist = distance
@@ -1935,7 +2114,8 @@ T prim() {
 \end{minted}
 
 \needspace{8\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Strongly Connected Components}
 \addcontentsline{toc}{subsection}{Strongly Connected Components}
 \begin{minted}{cpp}
@@ -1989,7 +2169,8 @@ void SCCS() {
 \end{minted}
 
 \needspace{6\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Topological Sort}
 \addcontentsline{toc}{subsection}{Topological Sort}
 \begin{minted}{cpp}
@@ -2035,7 +2216,8 @@ bool toposort() {
 \end{minted}
 
 \needspace{7\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Topological Sort (All possible sorts)}
 \addcontentsline{toc}{subsection}{Topological Sort (All possible sorts)}
 \begin{minted}{cpp}
@@ -2096,7 +2278,8 @@ void allToposorts() {
 \end{minted}
 
 \needspace{6\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Topological Sort (lowest lexicographically)}
 \addcontentsline{toc}{subsection}{Topological Sort (lowest lexicographically)}
 \begin{minted}{cpp}
@@ -2142,7 +2325,8 @@ bool toposort() {
 \end{minted}
 
 \needspace{6\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Tree Diameter (Longest Path Between 2 Nodes)}
 \addcontentsline{toc}{subsection}{Tree Diameter (Longest Path Between 2 Nodes)}
 \begin{minted}{cpp}
@@ -2201,12 +2385,13 @@ vector<int> diameter() {
 \end{minted}
 
 \needspace{10\baselineskip}
-\subsectionfont{\bfseries\sffamily\centering\LARGE}
+\subsectionfont{\centering\bfseries\LARGE}
 \vspace{0em}
 \subsection*{Cycles}
 \addcontentsline{toc}{subsection}{Cycles}
 \vspace{2em}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Get Some Cycles}
 \addcontentsline{toc}{subsubsection}{Get Some Cycles}
 \begin{minted}{cpp}
@@ -2272,7 +2457,8 @@ bool hasCycle() {
 \end{minted}
 
 \needspace{5\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Has Cycle}
 \addcontentsline{toc}{subsubsection}{Has Cycle}
 \begin{minted}{cpp}
@@ -2320,127 +2506,51 @@ bool hasCycle() {
 }
 \end{minted}
 
-\needspace{10\baselineskip}
-\subsectionfont{\bfseries\sffamily\centering\LARGE}
+\needspace{12\baselineskip}
+\subsectionfont{\centering\bfseries\LARGE}
 \vspace{0em}
 \subsection*{Flow}
 \addcontentsline{toc}{subsection}{Flow}
 \vspace{2em}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
-\subsubsection*{Max Flow Min Cost}
-\addcontentsline{toc}{subsubsection}{Max Flow Min Cost}
-\begin{minted}{cpp}
-// cap[a][b] = Capacity left from a to b
-// iflow = initial flow, icap = initial capacity
-// pathMinCap = capacity bottleneck for a path (s->t)
-\end{minted}
-\vspace{-12pt}
-\needspace{4\baselineskip}
-\begin{minted}{cpp}
-typedef int T;
-vector<int> level;
-vector<vector<int>> adj;
-vector<vector<T>> cap;
-T inf = 1 << 30;
-\end{minted}
-\vspace{-12pt}
-\needspace{4\baselineskip}
-\begin{minted}{cpp}
-void init(int N) {
-  adj.assign(N, vector<int>());
-  cap.assign(N, vector<T>(N));
-}
-\end{minted}
-\vspace{-12pt}
-\needspace{6\baselineskip}
-\begin{minted}{cpp}
-void addEdge(int u, int v, T icap, T iflow = 0) {
-  cap[u][v] = icap - iflow;
-  // cap[v][u] = cap[u][v]; // if graph is undirected
-  if (!cap[u][v])
-    adj[u].push_back(v), adj[v].push_back(u);
-}
-\end{minted}
-\vspace{-12pt}
-\needspace{19\baselineskip}
-\begin{minted}{cpp}
-// O(N)
-T sssp(int s, int t, vector<int> &dad) {
-  dad.assign(adj.size(), -1);
-  queue<pair<int, T>> q;
-  dad[s] = s, q.push(s);
-  while (q.size()) {
-    int u = q.front().first;
-    T pathMinCap = q.front().second;
-    q.pop();
-    for (int v : adj[u])
-      if (dad[v] == -1 && cap[u][v]) {
-        dad[v] = u;
-        T flow = min(pathMinCap, cap[u][v]);
-        if (v == t) return flow;
-        q.push({v, flow});
-      }
-  }
-  return 0;
-}
-\end{minted}
-\vspace{-12pt}
-\needspace{14\baselineskip}
-\begin{minted}{cpp}
-// O(E^2 * V)
-T maxFlowMinCut(int s, int t) {
-  T maxFlow = 0;
-  vector<int> dad;
-  while (T flow = bfs(s, t, dad)) {
-    maxFlow += flow;
-    int u = t;
-    while (u != s) {
-      cap[dad[u]][u] -= flow, cap[u][dad[u]] += flow;
-      u = dad[u];
-    }
-  }
-  return maxFlow;
-}
-\end{minted}
-
-\needspace{7\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Max Flow Min Cut Dinic}
 \addcontentsline{toc}{subsubsection}{Max Flow Min Cut Dinic}
 \begin{minted}{cpp}
-// cap[a][b] = Capacity from a to b
-// flow[a][b] = flow occupied from a to b
 // level[a] = level in graph of node a
-// iflow = initial flow, icap = initial capacity
 // pathMinCap = capacity bottleneck for a path (s->t)
+// icap = initial capacity, f[u] = flow of u
+// adj[u][i] = edge from u to v = adj[u][i]
+// cap[u][i] = capacity of edge u->adj[u][i]
+// rev[u][i] = index of u in adj[v]
+// rev is used to find the corresponding reverse edge
 \end{minted}
 \vspace{-12pt}
 \needspace{5\baselineskip}
 \begin{minted}{cpp}
 typedef int T;
+const T inf = 1 << 30;
+vector<vector<int>> adj, rev;
+vector<vector<T>> cap;
 vector<int> level;
-vector<vector<int>> adj;
-vector<vector<T>> cap, flow;
-T inf = 1 << 30;
 \end{minted}
 \vspace{-12pt}
-\needspace{5\baselineskip}
+\needspace{4\baselineskip}
 \begin{minted}{cpp}
 void init(int N) {
-  adj.assign(N, vector<int>());
-  cap.assign(N, vector<int>(N));
-  flow.assign(N, vector<int>(N));
+  adj = rev = vector<vector<int>>(N);
+  cap = vector<vector<T>>(N);
 }
 \end{minted}
 \vspace{-12pt}
 \needspace{7\baselineskip}
 \begin{minted}{cpp}
-void addEdge(int u, int v, T icap, T iflow = 0) {
-  if (!cap[u][v])
-    adj[u].push_back(v), adj[v].push_back(u);
-  cap[u][v] = icap;
-  // cap[v][u] = icap; // if graph is undirected
-  flow[u][v] += iflow, flow[v][u] -= iflow;
+// Assumes Directed Graph
+void addEdge(int u, int v, T icap) {
+  rev[u].push_back(adj[v].size());
+  rev[v].push_back(adj[u].size());
+  adj[u].push_back(v), adj[v].push_back(u);
+  cap[u].push_back(icap), cap[v].push_back(0);
 }
 \end{minted}
 \vspace{-12pt}
@@ -2448,14 +2558,13 @@ void addEdge(int u, int v, T icap, T iflow = 0) {
 \begin{minted}{cpp}
 bool levelGraph(int s, int t) {
   level.assign(adj.size(), 0);
-  level[s] = 1;
   queue<int> q;
-  q.push(s);
+  level[s] = 1, q.push(s);
   while (!q.empty()) {
-    int u = q.front();
-    q.pop();
-    for (int &v : adj[u]) {
-      if (!level[v] && flow[u][v] < cap[u][v]) {
+    int u = q.front(); q.pop();
+    for (int i = 0; i < adj[u].size(); i++) {
+      int v = adj[u][i];
+      if (!level[v] && cap[u][i]) {
         q.push(v);
         level[v] = level[u] + 1;
       }
@@ -2469,13 +2578,13 @@ bool levelGraph(int s, int t) {
 \begin{minted}{cpp}
 T blockingFlow(int u, int t, T pathMinCap) {
   if (u == t) return pathMinCap;
-  for (int v : adj[u]) {
-    T capLeft = cap[u][v] - flow[u][v];
-    if (level[v] == (level[u] + 1) && capLeft > 0)
+  for (int i = 0; i < adj[u].size(); i++) {
+    int v = adj[u][i];
+    if (level[v] == (level[u] + 1) && cap[u][i])
       if (T pathMaxFlow = blockingFlow(
-          v, t, min(pathMinCap, capLeft))) {
-        flow[u][v] += pathMaxFlow;
-        flow[v][u] -= pathMaxFlow;
+          v, t, min(pathMinCap, cap[u][i]))) {
+        cap[u][i] -= pathMaxFlow;
+        cap[v][rev[u][i]] += pathMaxFlow;
         return pathMaxFlow;
       }
   }
@@ -2485,7 +2594,7 @@ T blockingFlow(int u, int t, T pathMinCap) {
 \vspace{-12pt}
 \needspace{9\baselineskip}
 \begin{minted}{cpp}
-// O(E * V^2)
+// O(V^2 * E)
 T maxFlowMinCut(int s, int t) {
   if (s == t) return inf;
   T maxFlow = 0;
@@ -2496,77 +2605,74 @@ T maxFlowMinCut(int s, int t) {
 }
 \end{minted}
 
-\needspace{7\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\needspace{8\baselineskip}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Max Flow Min Cut Edmonds-Karp}
 \addcontentsline{toc}{subsubsection}{Max Flow Min Cut Edmonds-Karp}
 \begin{minted}{cpp}
-// cap[a][b] = Capacity left from a to b
-// iflow = initial flow, icap = initial capacity
-// pathMinCap = capacity bottleneck for a path (s->t)
+// icap = initial capacity, f[u] = flow of u
+// adj[u][i] = edge from u to v = adj[u][i]
+// cap[u][i] = capacity of edge u->adj[u][i]
+// rev[u][i] = index of u in adj[v]
+// rev is used to find the corresponding reverse edge
+// s = source, t = target
 \end{minted}
 \vspace{-12pt}
 \needspace{4\baselineskip}
 \begin{minted}{cpp}
 typedef int T;
-vector<int> level;
-vector<vector<int>> adj, cap;
-T inf = 1 << 30;
+vector<vector<int>> adj, rev;
+vector<vector<T>> cap;
+const T inf = 1 << 30;
 \end{minted}
 \vspace{-12pt}
 \needspace{4\baselineskip}
 \begin{minted}{cpp}
 void init(int N) {
-  adj.assign(N, vector<int>());
-  cap.assign(N, vector<int>(N));
+  adj = rev = vector<vector<int>>(N);
+  cap = vector<vector<T>>(N);
 }
 \end{minted}
 \vspace{-12pt}
-\needspace{6\baselineskip}
+\needspace{7\baselineskip}
 \begin{minted}{cpp}
-void addEdge(int u, int v, T icap, T iflow = 0) {
-  if (!cap[u][v])
-    adj[u].push_back(v), adj[v].push_back(u);
-  cap[u][v] = icap - iflow;
-  // cap[v][u] = cap[u][v]; // if graph is undirected
+// Assumes Directed Graph
+void addEdge(int u, int v, T icap) {
+  rev[u].push_back(adj[v].size());
+  rev[v].push_back(adj[u].size());
+  adj[u].push_back(v), adj[v].push_back(u);
+  cap[u].push_back(icap), cap[v].push_back(0);
 }
 \end{minted}
 \vspace{-12pt}
-\needspace{19\baselineskip}
+\needspace{29\baselineskip}
 \begin{minted}{cpp}
-// O(N)
-T bfs(int s, int t, vector<int> &dad) {
-  dad.assign(adj.size(), -1);
-  queue<pair<int, T>> q;
-  dad[s] = s, q.push(s);
-  while (q.size()) {
-    int u = q.front().first;
-    T pathMinCap = q.front().second;
-    q.pop();
-    for (int v : adj[u])
-      if (dad[v] == -1 && cap[u][v]) {
-        dad[v] = u;
-        T flow = min(pathMinCap, cap[u][v]);
-        if (v == t) return flow;
-        q.push({v, flow});
-      }
-  }
-  return 0;
-}
-\end{minted}
-\vspace{-12pt}
-\needspace{14\baselineskip}
-\begin{minted}{cpp}
-// O(E^2 * V)
+// O(V * E^2)
 T maxFlowMinCut(int s, int t) {
+  if (s == t) return inf;
   T maxFlow = 0;
-  vector<int> dad;
-  while (T flow = bfs(s, t, dad)) {
-    maxFlow += flow;
-    int u = t;
-    while (u != s) {
-      cap[dad[u]][u] -= flow, cap[u][dad[u]] += flow;
-      u = dad[u];
+  vector<T> f(adj.size());
+  while (true) {
+    vector<pair<int, int>> dad(adj.size(), {-1, -1});
+    queue<int> q;
+    q.push(s), f[s] = inf;
+    while (q.size() && dad[t].first == -1) {
+      int u = q.front(); q.pop();
+      for (int i = 0; i < adj[u].size(); i++) {
+        int v = adj[u][i];
+        if (dad[v].first == -1 && cap[u][i]) {
+          f[v] = min(f[u], cap[u][i]);
+          q.push(v), dad[v] = {u, i};
+        }
+      }
+    }
+    if (dad[t].first == -1) break;
+    maxFlow += f[t];
+    for (int v = t; v != s; v = dad[v].first) {
+      auto u = dad[v];
+      cap[u.first][u.second] -= f[t];
+      cap[v][rev[u.first][u.second]] += f[t];
     }
   }
   return maxFlow;
@@ -2574,7 +2680,8 @@ T maxFlowMinCut(int s, int t) {
 \end{minted}
 
 \needspace{2\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Maximum Bipartite Matching}
 \addcontentsline{toc}{subsubsection}{Maximum Bipartite Matching}
 \begin{minted}{cpp}
@@ -2593,60 +2700,141 @@ void addEdgeMBM(int u, int v) {
 \vspace{-12pt}
 \needspace{2\baselineskip}
 \begin{minted}{cpp}
-// O(E * V^2)
+// O(V^2 * E)
 T mbm() { return maxFlowMinCut(0, 1); }
 \end{minted}
 
+\needspace{9\baselineskip}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
+\subsubsection*{Minimum Cost Flow}
+\addcontentsline{toc}{subsubsection}{Minimum Cost Flow}
+\begin{minted}{cpp}
+// icost = initial cost, icap = initial capacity
+// adj[u][i] = edge from u to v = adj[u][i]
+// cap[u][i] = capacity of edge u->adj[u][i]
+// cost[u][i] = cost of edge u->adj[u][i]
+// rev[u][i] = index of u in adj[v], s = source
+// rev is used to find the corresponding reverse edge
+// d = distance vector, f[u] = flow of u, t = target
+\end{minted}
+\vspace{-12pt}
+\needspace{4\baselineskip}
+\begin{minted}{cpp}
+typedef int T;
+const T inf = 1 << 30;
+vector<vector<int>> adj, rev;
+vector<vector<T>> cap, cost;
+\end{minted}
+\vspace{-12pt}
+\needspace{4\baselineskip}
+\begin{minted}{cpp}
+void init(int N) {
+  adj = rev = vector<vector<int>>(N);
+  cap = cost = vector<vector<T>>(N);
+}
+\end{minted}
+\vspace{-12pt}
+\needspace{8\baselineskip}
+\begin{minted}{cpp}
+// Assumes Directed Graph
+void addEdge(int u, int v, T icap, T icost) {
+  rev[u].push_back(adj[v].size());
+  rev[v].push_back(adj[u].size());
+  adj[u].push_back(v), adj[v].push_back(u);
+  cap[u].push_back(icap), cap[v].push_back(0);
+  cost[u].push_back(icost), cost[v].push_back(-icost);
+}
+\end{minted}
+\vspace{-12pt}
+\needspace{35\baselineskip}
+\begin{minted}{cpp}
+// O(V^2 * E^2)
+pair<T, T> minCostFlow(int s, int t, int k = inf) {
+  if (s == t) return {k, 0};
+  T flow = 0, fcost = 0;
+  vector<int> inqueue(adj.size());
+  vector<T> f(adj.size());
+  while (flow < k) {
+    vector<pair<int, int>> dad(adj.size(), {-1, -1});
+    vector<T> d(adj.size(), inf);
+    vector<int> its(adj.size());
+    queue<int> q;
+    q.push(s), d[s] = 0, its[s] = 1, f[s] = k - flow;
+    while (q.size()) {
+      int u = q.front();
+      q.pop(), inqueue[u] = 0;
+      for (int i = 0; i < adj[u].size(); i++) {
+        int v = adj[u][i];
+        T dist = d[u] + cost[u][i];
+        if (dist < d[v] && cap[u][i]) {
+          d[v] = dist, dad[v] = {u, i};
+          f[v] = min(f[u], cap[u][i]);
+          if (!inqueue[v]++) q.push(v), its[v]++;
+          if (its[v] == adj.size()) return {-1, -1};
+        }
+      }
+    }
+    if (dad[t].first == -1) break;
+    flow += f[t], fcost += f[t] * d[t];
+    for (int v = t; v != s; v = dad[v].first) {
+      auto u = dad[v];
+      cap[u.first][u.second] -= f[t];
+      cap[v][rev[u.first][u.second]] += f[t];
+    }
+  }
+  return {flow, fcost};
+}
+\end{minted}
+
 \needspace{10\baselineskip}
-\subsectionfont{\bfseries\sffamily\centering\LARGE}
+\subsectionfont{\centering\bfseries\LARGE}
 \vspace{0em}
 \subsection*{Shortest Paths}
 \addcontentsline{toc}{subsection}{Shortest Paths}
 \vspace{2em}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{0 - 1 BFS}
 \addcontentsline{toc}{subsubsection}{0 - 1 BFS}
 \begin{minted}{cpp}
 // s = source
-typedef int T;
-long long int inf = (1ll << 62) - 1;
+typedef int T; // sum of costs might overflow
+const T inf = 1 << 30;
 vector<vector<int>> adj;
-unordered_map<int, unordered_map<int, T>> weight;
+vector<vector<T>> cost;
 \end{minted}
 \vspace{-12pt}
 \needspace{4\baselineskip}
 \begin{minted}{cpp}
 void init(int N) {
   adj.assign(N, vector<int>());
-  weight.clear();
+  cost.assign(N, vector<T>());
 }
 \end{minted}
 \vspace{-12pt}
-\needspace{7\baselineskip}
+\needspace{4\baselineskip}
 \begin{minted}{cpp}
-void addEdge(int u, int v, T w, bool isDirected = 0) {
-  adj[u].push_back(v);
-  weight[u][v] = w;
-  if (isDirected) return;
-  adj[v].push_back(u);
-  weight[v][u] = w;
+// Assumes Directed Graph
+void addEdge(int u, int v, T c) {
+  adj[u].push_back(v), cost[u].push_back(c);
 }
 \end{minted}
 \vspace{-12pt}
 \needspace{17\baselineskip}
 \begin{minted}{cpp}
 // O(E)
-vector<T> bfs(int s) {
-  vector<long long int> dist(adj.size(), inf);
-  dist[s] = 0;
+vector<T> sssp01(int s) {
+  vector<T> dist(adj.size(), inf);
   deque<int> q;
-  q.push_front(s);
+  dist[s] = 0, q.push_front(s);
   while (q.size()) {
     int u = q.front(); q.pop_front();
-    for (auto& v : adj[u]) {
-      T d = dist[u] + weight[u][v];
+    for (int i = 0; i < adj[u].size(); i++) {
+      int v = adj[u][i];
+      T d = dist[u] + cost[u][i];
       if (d < dist[v])
-        weight[u][v] ? q.push_back(v)
+        cost[u][i] ? q.push_back(v)
                      : q.push_front(v);
     }
   }
@@ -2655,47 +2843,46 @@ vector<T> bfs(int s) {
 \end{minted}
 
 \needspace{8\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Bellman Ford}
 \addcontentsline{toc}{subsubsection}{Bellman Ford}
 \begin{minted}{cpp}
 // s = source
-// returns {} if there is a negative weight cycle
-typedef int T;
-long long int inf = (1ll << 62) - 1;
+// returns {} if there is a negative cost cycle
+typedef int T;  // sum of costs might overflow
+const T inf = 1 << 30;
 vector<vector<int>> adj;
-unordered_map<int, unordered_map<int, T>> weight;
+vector<vector<T>> cost;
 \end{minted}
 \vspace{-12pt}
 \needspace{4\baselineskip}
 \begin{minted}{cpp}
 void init(int N) {
-  adj.assign(N, vector<int>());
-  weight.clear();
+  adj = vector<vector<int>>(N);
+  cost = vector<vector<T>>(N);
 }
 \end{minted}
 \vspace{-12pt}
-\needspace{7\baselineskip}
+\needspace{4\baselineskip}
 \begin{minted}{cpp}
-void addEdge(int u, int v, T w, bool isDirected = 0) {
-  adj[u].push_back(v);
-  weight[u][v] = w;
-  if (isDirected) return;
-  adj[v].push_back(u);
-  weight[v][u] = w;
+// Assumes Directed Graph
+void addEdge(int u, int v, T c) {
+  adj[u].push_back(v), cost[u].push_back(c);
 }
 \end{minted}
 \vspace{-12pt}
-\needspace{15\baselineskip}
+\needspace{16\baselineskip}
 \begin{minted}{cpp}
 // O(V * E)
 vector<T> bellmanFord(int s) {
-  vector<long long int> dist(adj.size(), inf);
+  vector<T> dist(adj.size(), inf);
   dist[s] = 0;
   for (int i = 1; i <= adj.size(); i++)
     for (int u = 0; u < adj.size(); u++)
-      for (auto &v : adj[u]) {
-        T d = dist[u] + weight[u][v];
+      for (int i = 0; i < adj[u].size(); i++) {
+        int v = adj[u][i];
+        T d = dist[u] + cost[u][i];
         if (dist[u] != inf && d < dist[v]) {
           if (i == adj.size()) return {};
           dist[v] = d;
@@ -2706,49 +2893,48 @@ vector<T> bellmanFord(int s) {
 \end{minted}
 
 \needspace{8\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Bellman Ford Fast}
 \addcontentsline{toc}{subsubsection}{Bellman Ford Fast}
 \begin{minted}{cpp}
-// s = source, its = iterations of node u
-// returns {} if there is a negative weight cycle
-typedef int T;
-long long int inf = (1ll << 62) - 1;
+// s = source
+// returns {} if there is a negative cost cycle
+typedef int T;  // sum of costs might overflow
+const T inf = 1 << 30;
 vector<vector<int>> adj;
-unordered_map<int, unordered_map<int, T>> weight;
+vector<vector<T>> cost;
 \end{minted}
 \vspace{-12pt}
 \needspace{4\baselineskip}
 \begin{minted}{cpp}
 void init(int N) {
-  adj.assign(N, vector<int>());
-  weight.clear();
+  adj = vector<vector<int>>(N);
+  cost = vector<vector<T>>(N);
 }
 \end{minted}
 \vspace{-12pt}
-\needspace{7\baselineskip}
+\needspace{4\baselineskip}
 \begin{minted}{cpp}
-void addEdge(int u, int v, T w, bool isDirected = 0) {
-  adj[u].push_back(v);
-  weight[u][v] = w;
-  if (isDirected) return;
-  adj[v].push_back(u);
-  weight[v][u] = w;
+// Assumes Directed Graph
+void addEdge(int u, int v, T c) {
+  adj[u].push_back(v), cost[u].push_back(c);
 }
 \end{minted}
 \vspace{-12pt}
-\needspace{19\baselineskip}
+\needspace{20\baselineskip}
 \begin{minted}{cpp}
 // O(V * E)
 vector<T> bellmanFordFast(int s) {
-  vector<long long int> dist(adj.size(), inf);
+  vector<T> dist(adj.size(), inf);
   vector<int> its(adj.size()), inqueue(adj.size());
   queue<int> q;
   q.push(s), dist[s] = 0, its[s] = 1;
   while (!q.empty()) {
     int u = q.front(); q.pop(), inqueue[u] = 0;
-    for (auto &v : adj[u]) {
-      T d = dist[u] + weight[u][v];
+    for (int i = 0; i < adj[u].size(); i++) {
+      int v = adj[u][i];
+      T d = dist[u] + cost[u][i];
       if (d < dist[v]) {
         dist[v] = d;
         if (!inqueue[v]++) q.push(v), its[v]++;
@@ -2760,52 +2946,50 @@ vector<T> bellmanFordFast(int s) {
 }
 \end{minted}
 
-\needspace{8\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\needspace{7\baselineskip}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Dijkstra}
 \addcontentsline{toc}{subsubsection}{Dijkstra}
 \begin{minted}{cpp}
 // s = source
-typedef int T;
+typedef int T;  // sum of costs might overflow
 typedef pair<T, int> DistNode;
-T inf = 1 << 30;
+const T inf = 1 << 30;
 vector<vector<int>> adj;
-unordered_map<int, unordered_map<int, T>> weight;
+vector<vector<T>> cost;
 \end{minted}
 \vspace{-12pt}
 \needspace{4\baselineskip}
 \begin{minted}{cpp}
 void init(int N) {
-  adj.assign(N, vector<int>());
-  weight.clear();
+  adj = vector<vector<int>>(N);
+  cost = vector<vector<T>>(N);
 }
 \end{minted}
 \vspace{-12pt}
-\needspace{7\baselineskip}
+\needspace{4\baselineskip}
 \begin{minted}{cpp}
-void addEdge(int u, int v, T w, bool isDirected = 0) {
-  adj[u].push_back(v);
-  weight[u][v] = w;
-  if (isDirected) return;
-  adj[v].push_back(u);
-  weight[v][u] = w;
+// Assumes Directed Graph
+void addEdge(int u, int v, T c) {
+  adj[u].push_back(v), cost[u].push_back(c);
 }
 \end{minted}
 \vspace{-12pt}
-\needspace{16\baselineskip}
+\needspace{17\baselineskip}
 \begin{minted}{cpp}
 // ~ O(E * lg(V))
 vector<T> dijkstra(int s) {
-  vector<long long int> dist(adj.size(), inf);
+  vector<T> dist(adj.size(), inf);
   priority_queue<DistNode> q;
   q.push({0, s}), dist[s] = 0;
   while (q.size()) {
-    DistNode top = q.top();
-    q.pop();
+    DistNode top = q.top(); q.pop();
     int u = top.second;
     if (dist[u] < -top.first) continue;
-    for (int &v : adj[u]) {
-      T d = dist[u] + weight[u][v];
+    for (int i = 0; i < adj[u].size(); i++) {
+      int v = adj[u][i];
+      T d = dist[u] + cost[u][i];
       if (d < dist[v]) q.push({-(dist[v] = d), v});
     }
   }
@@ -2814,28 +2998,26 @@ vector<T> dijkstra(int s) {
 \end{minted}
 
 \needspace{11\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Floyd Warshall}
 \addcontentsline{toc}{subsubsection}{Floyd Warshall}
 \begin{minted}{cpp}
 // d = distance
-typedef int T;
-long long int inf = (1ll << 62) - 1;
-vector<vector<long long int>> d;
+typedef int T;  // sum of costs might overflow
+const T inf = 1 << 30;
+vector<vector<T>> d;
 
 void init(int n) {
-  d.assign(n, vector<long long int>(n, inf));
+  d.assign(n, vector<T>(n, inf));
   for (int i = 0; i < n; i++) d[i][i] = 0;
 }
 \end{minted}
 \vspace{-12pt}
-\needspace{5\baselineskip}
+\needspace{2\baselineskip}
 \begin{minted}{cpp}
-void addEdge(int u, int v, T w, bool isDirected = 0) {
-  d[u][v] = w;
-  if (isDirected) return;
-  d[v][u] = w;
-}
+// Assumes Directed Graph
+void addEdge(int u, int v, T c) { d[u][v] = c; }
 \end{minted}
 \vspace{-12pt}
 \needspace{7\baselineskip}
@@ -2849,45 +3031,44 @@ void floydwarshall() {
 }
 \end{minted}
 
-\needspace{14\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\needspace{12\baselineskip}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Shortest Path in Directed Acyclic Graph}
 \addcontentsline{toc}{subsubsection}{Shortest Path in Directed Acyclic Graph}
 \begin{minted}{cpp}
 // s = source
 #include "../Topological Sort.cpp"
-typedef int T;
-long long int inf = (1ll << 62) - 1;
-unordered_map<int, unordered_map<int, T>> weight;
+typedef int T; // sum of costs might overflow
+const T inf = 1 << 30;
+vector<vector<T>> cost;
 
 void init(int N) {
-  adj.assign(N, vector<int>());
-  vis.assign(N, 0);
-  toposorted.clear();
-  weight.clear();
+  init(N); // toposort init()
+  cost = vector<vector<T>>(N);
 }
 \end{minted}
 \vspace{-12pt}
 \needspace{4\baselineskip}
 \begin{minted}{cpp}
-void addEdge(int u, int v, int w) {
-  adj[u].push_back(v);
-  weight[u][v] = w;
+// Assumes Directed Graph
+void addEdge(int u, int v, T c) {
+  adj[u].push_back(v), cost[u].push_back(c);
 }
 \end{minted}
 \vspace{-12pt}
-\needspace{14\baselineskip}
+\needspace{15\baselineskip}
 \begin{minted}{cpp}
 // O(N)
 vector<T> dagsssp(int s) {
-  vector<long long int> dist(adj.size(), inf);
-  dist[s] = 0;
-  toposort(s);
+  vector<T> dist(adj.size(), inf);
+  dist[s] = 0, toposort(s);
   while (toposorted.size()) {
     int u = toposorted.back();
     toposorted.pop_back();
-    for (auto &v : adj[u]) {
-      T d = dist[u] + weight[u][v];
+    for (int i = 0; i < adj[u].size(); i++) {
+      int v = adj[u][i];
+      T d = dist[u] + cost[u][i];
       if (d < dist[v]) dist[v] = d;
     }
   }
@@ -2896,18 +3077,19 @@ vector<T> dagsssp(int s) {
 \end{minted}
 
 \needspace{13\baselineskip}
-\sectionfont{\bfseries\sffamily\centering\Huge}
+\sectionfont{\centering\bfseries\Huge}
 \vspace{1em}
 \section*{Maths}
 \markboth{MATHS}{}
 \addcontentsline{toc}{section}{Maths}
 \vspace{3em}
-\subsectionfont{\bfseries\sffamily\centering\LARGE}
+\subsectionfont{\centering\bfseries\LARGE}
 \vspace{0em}
 \subsection*{Data Structures}
 \addcontentsline{toc}{subsection}{Data Structures}
 \vspace{2em}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Matrix}
 \addcontentsline{toc}{subsubsection}{Matrix}
 \begin{minted}{cpp}
@@ -3006,12 +3188,13 @@ struct Matrix {
 \end{minted}
 
 \needspace{14\baselineskip}
-\subsectionfont{\bfseries\sffamily\centering\LARGE}
+\subsectionfont{\centering\bfseries\LARGE}
 \vspace{0em}
 \subsection*{Combinatorics}
 \addcontentsline{toc}{subsection}{Combinatorics}
 \vspace{2em}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Binomial Coefficient}
 \addcontentsline{toc}{subsubsection}{Binomial Coefficient}
 \begin{minted}{cpp}
@@ -3027,7 +3210,8 @@ li nCk(li n, int k) {
 \end{minted}
 
 \needspace{14\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Binomial Coefficient (Pascal's Triangle)}
 \addcontentsline{toc}{subsubsection}{Binomial Coefficient (Pascal's Triangle)}
 \begin{minted}{cpp}
@@ -3046,7 +3230,8 @@ vector<vector<li>> nCk(int maxN) {
 \end{minted}
 
 \needspace{12\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Binomial Coefficient Modulo Large Prime}
 \addcontentsline{toc}{subsubsection}{Binomial Coefficient Modulo Large Prime}
 \begin{minted}{cpp}
@@ -3063,7 +3248,8 @@ li nCk(int n, int k, li p, vector<li> &fact) {
 \end{minted}
 
 \needspace{11\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Factorials Modulo M}
 \addcontentsline{toc}{subsubsection}{Factorials Modulo M}
 \begin{minted}{cpp}
@@ -3079,12 +3265,13 @@ vector<li> factorials(int n, li m) {
 \end{minted}
 
 \needspace{15\baselineskip}
-\subsectionfont{\bfseries\sffamily\centering\LARGE}
+\subsectionfont{\centering\bfseries\LARGE}
 \vspace{0em}
 \subsection*{Number Theory}
 \addcontentsline{toc}{subsection}{Number Theory}
 \vspace{2em}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Binary Exponentiation}
 \addcontentsline{toc}{subsubsection}{Binary Exponentiation}
 \begin{minted}{cpp}
@@ -3101,7 +3288,8 @@ li binPow(li a, li p) {
 \end{minted}
 
 \needspace{9\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Convert 10-Based Number To Base B}
 \addcontentsline{toc}{subsubsection}{Convert 10-Based Number To Base B}
 \begin{minted}{cpp}
@@ -3115,7 +3303,8 @@ vector<int> toBaseB(int n, int b) {
 \end{minted}
 
 \needspace{9\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Convert B-Based Number To Base 10}
 \addcontentsline{toc}{subsubsection}{Convert B-Based Number To Base 10}
 \begin{minted}{cpp}
@@ -3129,7 +3318,8 @@ int toBase10(vector<int>& n, int b) {
 \end{minted}
 
 \needspace{11\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Diophantine Equation (Base Solution)}
 \addcontentsline{toc}{subsubsection}{Diophantine Equation (Base Solution)}
 \begin{minted}{cpp}
@@ -3145,7 +3335,8 @@ pair<li, li> diophantineBase(li a, li b, li c) {
 \end{minted}
 
 \needspace{13\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Diophantine Equation (Particular Solution)}
 \addcontentsline{toc}{subsubsection}{Diophantine Equation (Particular Solution)}
 \begin{minted}{cpp}
@@ -3163,7 +3354,8 @@ pair<li, li> diophantineSol(li a, li b, li c, li i) {
 \end{minted}
 
 \needspace{15\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Divisibility Criterion}
 \addcontentsline{toc}{subsubsection}{Divisibility Criterion}
 \begin{minted}{py}
@@ -3212,7 +3404,8 @@ if __name__ == '__main__':
 \end{minted}
 
 \needspace{15\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Divisors}
 \addcontentsline{toc}{subsubsection}{Divisors}
 \begin{minted}{cpp}
@@ -3234,7 +3427,8 @@ V getDivisors(li n) {
 \end{minted}
 
 \needspace{16\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Divisors Pollard Rho}
 \addcontentsline{toc}{subsubsection}{Divisors Pollard Rho}
 \begin{minted}{cpp}
@@ -3266,7 +3460,8 @@ V getDivisors(li n) {
 \end{minted}
 
 \needspace{13\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Euler's Phi}
 \addcontentsline{toc}{subsubsection}{Euler's Phi}
 \begin{minted}{cpp}
@@ -3284,11 +3479,12 @@ li phi(li n) {
 \end{minted}
 
 \needspace{13\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Extended Euclidean Algorithm}
 \addcontentsline{toc}{subsubsection}{Extended Euclidean Algorithm}
 \begin{minted}{cpp}
-#include "Modulo with negative numbers.cpp"
+#include "../../Util/Modulo with negative numbers.cpp"
 #include "../../Util/Floor Of Division Between Integers.cpp"
 typedef long long int li;
 
@@ -3302,7 +3498,8 @@ tuple<li, li, li> extendedGCD(li a, li b) {
 \end{minted}
 
 \needspace{7\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{GCD}
 \addcontentsline{toc}{subsubsection}{GCD}
 \begin{minted}{cpp}
@@ -3323,7 +3520,8 @@ li gcdI(li a, li b) {
 \end{minted}
 
 \needspace{8\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{LCM}
 \addcontentsline{toc}{subsubsection}{LCM}
 \begin{minted}{cpp}
@@ -3336,7 +3534,8 @@ int lcm(li a, li b) {
 \end{minted}
 
 \needspace{11\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Modular Exponentiation}
 \addcontentsline{toc}{subsubsection}{Modular Exponentiation}
 \begin{minted}{cpp}
@@ -3352,7 +3551,8 @@ li pow(li a, li p, li m) {
 \end{minted}
 
 \needspace{13\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Modular Multiplication}
 \addcontentsline{toc}{subsubsection}{Modular Multiplication}
 \begin{minted}{cpp}
@@ -3370,7 +3570,8 @@ li multiply(li a, li b, li m) {
 \end{minted}
 
 \needspace{12\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Modular Multiplicative Inverse}
 \addcontentsline{toc}{subsubsection}{Modular Multiplicative Inverse}
 \begin{minted}{cpp}
@@ -3387,7 +3588,8 @@ li modInv(li n, li m) {
 \end{minted}
 
 \needspace{10\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Modular Multiplicative Inverses Modulo M [1, M)}
 \addcontentsline{toc}{subsubsection}{Modular Multiplicative Inverses Modulo M [1, M)}
 \begin{minted}{cpp}
@@ -3401,39 +3603,28 @@ vector<int> modinvs(int m) {
 }
 \end{minted}
 
-\needspace{7\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
-\subsubsection*{Modulo with negative numbers}
-\addcontentsline{toc}{subsubsection}{Modulo with negative numbers}
-\begin{minted}{cpp}
-typedef long long int li;
-
-// if b is positive the answer is positive
-// if b is negative the answer is negative
-li mod(li a, li b) { return (b + (a % b)) % b; }
-\end{minted}
-
 \needspace{30\baselineskip}
-\subsectionfont{\bfseries\sffamily\centering\LARGE}
+\subsectionfont{\centering\bfseries\LARGE}
 \vspace{0em}
 \subsection*{Primes}
 \addcontentsline{toc}{subsection}{Primes}
 \vspace{2em}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Is Prime Miller Rabin}
 \addcontentsline{toc}{subsubsection}{Is Prime Miller Rabin}
 \begin{minted}{cpp}
 #include "../Number Theory/Modular Exponentiation.cpp"
 
-bool isPrime(lli p, int k = 20) {
+bool isPrime(li p, int k = 20) {
   if (p == 2 || p == 3) return 1;
   if ((~p & 1) || p == 1) return 0;
-  lli d = p - 1, phi = d, r = 0;
+  li d = p - 1, phi = d, r = 0;
   while (~d & 1) d >>= 1, r++;
   while (k--) {
     // set seed with: int main() { srand(time(0)); }
-    lli a = 2 + rand() % (p - 3);  // [2, p - 2]
-    lli e = pow(a, d, p), r2 = r;
+    li a = 2 + rand() % (p - 3);  // [2, p - 2]
+    li e = pow(a, d, p), r2 = r;
     if (e == 1 || e == phi) continue;
     bool flag = 1;
     while (--r2) {
@@ -3450,65 +3641,23 @@ bool isPrime(lli p, int k = 20) {
 }
 \end{minted}
 
-\needspace{15\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
-\subsubsection*{Prime Factorization}
-\addcontentsline{toc}{subsubsection}{Prime Factorization}
-\begin{minted}{cpp}
-typedef long long int li;
-// if li == __int128_t: use map<li, int> Map;
-typedef unordered_map<li, int> Map;
-
-// ~O(sqrt(N) * lg(N))
-Map getPrimeFactors(li n) {
-  Map pf;
-  while (~n & 1) pf[2]++, n >>= 1;
-  for (li i = 3; i * i <= n; i += 2)
-    while (!(n % i)) pf[i]++, n /= i;
-  if (n > 1) pf[n]++;
-  return pf;
-}
-\end{minted}
-
-\needspace{17\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
-\subsubsection*{Prime Factorization (Sieve)}
-\addcontentsline{toc}{subsubsection}{Prime Factorization (Sieve)}
-\begin{minted}{cpp}
-#include "Primes Sieve.cpp"
-
-typedef unordered_map<int, int> Map;
-
-// O(lg(N)) n <= sieve.size()
-Map getPrimeFactors(int n) {
-  Map pf;
-  while (n > 1) {
-    int p = n & 1 ? sieve[n] : 2, c;
-    if (!p) p = n;
-    while (n % p == 0) n /= p, c++;
-    pf[p] = c;
-  }
-  return pf;
-}
-\end{minted}
-
-\needspace{20\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
-\subsubsection*{Prime Factorization (Sieve) 2}
-\addcontentsline{toc}{subsubsection}{Prime Factorization (Sieve) 2}
+\needspace{19\baselineskip}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
+\subsubsection*{Prime Factorization Up To 1e12}
+\addcontentsline{toc}{subsubsection}{Prime Factorization Up To 1e12}
 \begin{minted}{cpp}
 #include "Primes Sieve.cpp"
 
 typedef long long int li;
-// if li == __int128_t: use map<li, int> Map;
-typedef unordered_map<li, int> Map;
+typedef map<li, int> Map;
 
-// O(sqrt(N)) n <= sieve.size() ^ 2
+// O(#Primes * lg(N)), n <= sieve.size() ^ 2
 Map getPrimeFactors(li n) {
   Map pf;
   for (int& p : primes) {
     if (p * p > n) break;
-    int c;
+    int c = 0;
     while (n % p == 0) n /= p, c++;
     if (c) pf[p] = c;
   }
@@ -3517,10 +3666,11 @@ Map getPrimeFactors(li n) {
 }
 \end{minted}
 
-\needspace{12\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
-\subsubsection*{Prime Factorization Pollard Rho}
-\addcontentsline{toc}{subsubsection}{Prime Factorization Pollard Rho}
+\needspace{11\baselineskip}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
+\subsubsection*{Prime Factorization Up To 1e18}
+\addcontentsline{toc}{subsubsection}{Prime Factorization Up To 1e18}
 \begin{minted}{cpp}
 // pf = prime factors
 
@@ -3528,8 +3678,7 @@ Map getPrimeFactors(li n) {
 #include "./Is Prime Miller Rabin.cpp"
 
 typedef long long int li;
-// if li == __int128_t: use map<li, int> Map;
-typedef unordered_map<li, int> Map;
+typedef map<li, int> Map;
 
 li _abs(li a) { return a < 0 ? -a : a; }
 \end{minted}
@@ -3571,11 +3720,59 @@ Map getPrimeFactors(li n) {
 }
 \end{minted}
 
-\needspace{15\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\needspace{17\baselineskip}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
+\subsubsection*{Prime Factorization Up To 1e6}
+\addcontentsline{toc}{subsubsection}{Prime Factorization Up To 1e6}
+\begin{minted}{cpp}
+#include "Primes Sieve.cpp"
+
+typedef map<int, int> Map;
+
+// O(lg(N)) n <= sieve.size()
+Map getPrimeFactors(int n) {
+  Map pf;
+  while (n > 1) {
+    int p = n & 1 ? sieve[n] : 2, c = 0;
+    if (!p) p = n;
+    while (n % p == 0) n /= p, c++;
+    pf[p] = c;
+  }
+  return pf;
+}
+\end{minted}
+
+\needspace{14\baselineskip}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
+\subsubsection*{Prime Factorization Up To 1e9}
+\addcontentsline{toc}{subsubsection}{Prime Factorization Up To 1e9}
+\begin{minted}{cpp}
+typedef long long int li;
+typedef map<li, int> Map;
+
+// ~O(sqrt(N) * lg(N))
+Map getPrimeFactors(li n) {
+  Map pf;
+  while (~n & 1) pf[2]++, n >>= 1;
+  for (li i = 3; i * i <= n; i += 2)
+    while (!(n % i)) pf[i]++, n /= i;
+  if (n > 1) pf[n]++;
+  return pf;
+}
+\end{minted}
+
+\needspace{20\baselineskip}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Primes Sieve}
 \addcontentsline{toc}{subsubsection}{Primes Sieve}
 \begin{minted}{cpp}
+// sieve[i] = lowest prime factor of i
+// sieve[even number] = 0
+// sieve[prime] = 0
+
 vector<int> sieve, primes;
 
 // ~O(N * lg(lg(N)))
@@ -3587,24 +3784,25 @@ void primeSieve(int n) {
       for (int j = i * i; j <= n; j += 2 * i)
         if (!sieve[j]) sieve[j] = i;
   primes.push_back(2);
-  for (int i = 3; i < n; i++)
+  for (int i = 3; i <= n; i++)
     if (!sieve[i] && (i & 1)) primes.push_back(i);
 }
 \end{minted}
 
 \needspace{16\baselineskip}
-\sectionfont{\bfseries\sffamily\centering\Huge}
+\sectionfont{\centering\bfseries\Huge}
 \vspace{1em}
 \section*{Ranges}
 \markboth{RANGES}{}
 \addcontentsline{toc}{section}{Ranges}
 \vspace{3em}
-\subsectionfont{\bfseries\sffamily\centering\LARGE}
+\subsectionfont{\centering\bfseries\LARGE}
 \vspace{0em}
 \subsection*{Data Structures}
 \addcontentsline{toc}{subsection}{Data Structures}
 \vspace{2em}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{BIT}
 \addcontentsline{toc}{subsubsection}{BIT}
 \begin{minted}{cpp}
@@ -3692,7 +3890,8 @@ struct BIT {
 \end{minted}
 
 \needspace{5\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{BIT Range Update}
 \addcontentsline{toc}{subsubsection}{BIT Range Update}
 \begin{minted}{cpp}
@@ -3756,7 +3955,8 @@ T query(int l, int r) {
 \end{minted}
 
 \needspace{6\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Segment Tree}
 \addcontentsline{toc}{subsubsection}{Segment Tree}
 \begin{minted}{cpp}
@@ -3779,7 +3979,7 @@ struct SegmentTree {
 \needspace{3\baselineskip}
 \begin{minted}{cpp}
   SegmentTree(int n, int neut,
-      T f(T, T) = [](int a, int b) { return a + b; };)
+      T f(T, T) = [](T a, T b) { return a + b; })
       : neutro(neut), st(2 * n, neutro), N(n), F(f) {}
 \end{minted}
 \vspace{-12pt}
@@ -3821,7 +4021,8 @@ struct SegmentTree {
 \end{minted}
 
 \needspace{7\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Segment Tree Lazy Propagation}
 \addcontentsline{toc}{subsubsection}{Segment Tree Lazy Propagation}
 \begin{minted}{cpp}
@@ -3846,7 +4047,7 @@ struct SegmentTree {
 \needspace{5\baselineskip}
 \begin{minted}{cpp}
   SegmentTree(int n, T val,
-      T f(T, T) = [](int a, int b) { return a + b; };)
+      T f(T, T) = [](T a, T b) { return a + b; })
       : st(2 * n, val), d(n), u(n), F(f) {
     H = sizeof(int) * 8 - __builtin_clz(N = n);
   }
@@ -3936,66 +4137,64 @@ struct SegmentTree {
 };
 \end{minted}
 
-\needspace{6\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\needspace{8\baselineskip}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Sparse Table}
 \addcontentsline{toc}{subsubsection}{Sparse Table}
 \begin{minted}{cpp}
 // st = sparse table, Arith = Arithmetic
-typedef int T;
-int neutro = 0;
-vector<vector<T>> st;
+template <class T>
+struct SparseTable {
+  vector<vector<T>> st;
+  function<T(T, T)> F;
+  SparseTable() {}
 \end{minted}
 \vspace{-12pt}
-\needspace{6\baselineskip}
+\needspace{12\baselineskip}
 \begin{minted}{cpp}
-T F(T a, T b) {
-  // return min(a, b);
-  return __gcd(a, b);
-  // return a + b; // Arith
-  // return a * b; // Arith
-}
-\end{minted}
-\vspace{-12pt}
-\needspace{9\baselineskip}
-\begin{minted}{cpp}
-// O(N * lg(N))
-void build(vector<T> &arr) {
-  st.assign(log2(arr.size()), vector<T>(arr.size()));
-  st[0] = arr;
-  for (int i = 1; (1 << i) <= arr.size(); i++)
-    for (int j = 0; j + (1 << i) <= arr.size(); j++)
-      st[i][j] = F(st[i - 1][j],
-                   st[i - 1][j + (1 << (i - 1))]);
-}
+  // O(N * lg(N))
+  SparseTable(vector<T> &v,
+      T f(T, T) = [](T a, T b) { return a + b; })
+      : F(f) {
+    st.assign(1 + log2(v.size()),
+              vector<T>(v.size()));
+    st[0] = v;
+    for (int i = 1; (1 << i) <= v.size(); i++)
+      for (int j = 0; j + (1 << i) <= v.size(); j++)
+        st[i][j] = F(st[i - 1][j],
+                     st[i - 1][j + (1 << (i - 1))]);
+  }
 \end{minted}
 \vspace{-12pt}
 \needspace{5\baselineskip}
 \begin{minted}{cpp}
-// O(1), [l, r]
-T query(int l, int r) {
-  int i = log2(r - l + 1);
-  return F(st[i][l], st[i][r + 1 - (1 << i)]);
-}
+  // O(1), [l, r]
+  T query(int l, int r) {
+    int i = log2(r - l + 1);
+    return F(st[i][l], st[i][r + 1 - (1 << i)]);
+  }
 \end{minted}
 \vspace{-12pt}
-\needspace{11\baselineskip}
+\needspace{12\baselineskip}
 \begin{minted}{cpp}
-// O(lg(N)), [l, r]
-T queryArith(int l, int r) {
-  T ans = neutro;
-  while (true) {
-    int k = log2(r - l + 1);
-    ans = F(ans, st[k][l]);
-    l += 1 << k;
-    if (l > r) break;
+  // O(lg(N)), [l, r]
+  T queryArith(int l, int r) {
+    T ans = 0; // neutral value
+    while (true) {
+      int k = log2(r - l + 1);
+      ans = F(ans, st[k][l]);
+      l += 1 << k;
+      if (l > r) break;
+    }
+    return ans;
   }
-  return ans;
-}
+};
 \end{minted}
 
 \needspace{11\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Wavelet Tree}
 \addcontentsline{toc}{subsubsection}{Wavelet Tree}
 \begin{minted}{cpp}
@@ -4086,18 +4285,19 @@ struct WaveletTree {
 \end{minted}
 
 \needspace{14\baselineskip}
-\sectionfont{\bfseries\sffamily\centering\Huge}
+\sectionfont{\centering\bfseries\Huge}
 \vspace{1em}
 \section*{Strings}
 \markboth{STRINGS}{}
 \addcontentsline{toc}{section}{Strings}
 \vspace{3em}
-\subsectionfont{\bfseries\sffamily\centering\LARGE}
+\subsectionfont{\centering\bfseries\LARGE}
 \vspace{0em}
 \subsection*{Data Structures}
 \addcontentsline{toc}{subsection}{Data Structures}
 \vspace{2em}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Suffix Automaton}
 \addcontentsline{toc}{subsubsection}{Suffix Automaton}
 \begin{minted}{cpp}
@@ -4173,7 +4373,8 @@ struct SuffixAutomaton {
 \end{minted}
 
 \needspace{5\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Trie}
 \addcontentsline{toc}{subsubsection}{Trie}
 \begin{minted}{cpp}
@@ -4305,7 +4506,8 @@ struct Trie {
 \end{minted}
 
 \needspace{16\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Distinct Substring Count}
 \addcontentsline{toc}{subsection}{Distinct Substring Count}
 \begin{minted}{cpp}
@@ -4325,7 +4527,8 @@ int distinctSubstrCount(const string& s) {
 \end{minted}
 
 \needspace{6\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{KMP}
 \addcontentsline{toc}{subsection}{KMP}
 \begin{minted}{cpp}
@@ -4365,7 +4568,8 @@ vector<int> search(string &p, string &t) {
 \end{minted}
 
 \needspace{15\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Levenshtein Distance (Bottom-Up)}
 \addcontentsline{toc}{subsection}{Levenshtein Distance (Bottom-Up)}
 \begin{minted}{cpp}
@@ -4384,12 +4588,13 @@ int editDistance(string& s, string& t) {
 \end{minted}
 
 \needspace{15\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Levenshtein Distance (Top-Down)}
 \addcontentsline{toc}{subsection}{Levenshtein Distance (Top-Down)}
 \begin{minted}{cpp}
 // i and j are last indexes of s and t respectively
-int editDistanceI(string& s, string& t, int i, int j,
+int editDistance(string& s, string& t, int i, int j,
                  vector<vector<int>>& dp) {
   if (i < 0) return j + 1;
   if (j < 0) return i + 1;
@@ -4403,7 +4608,8 @@ int editDistanceI(string& s, string& t, int i, int j,
 \end{minted}
 
 \needspace{3\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Levenshtein-Damerau Distance}
 \addcontentsline{toc}{subsection}{Levenshtein-Damerau Distance}
 \begin{minted}{cpp}
@@ -4411,7 +4617,8 @@ int editDistanceI(string& s, string& t, int i, int j,
 \end{minted}
 
 \needspace{16\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Lexicographically K-th Substring}
 \addcontentsline{toc}{subsection}{Lexicographically K-th Substring}
 \begin{minted}{cpp}
@@ -4452,7 +4659,8 @@ vector<string> kthSubstr(string& s, vector<int>& ks) {
 \end{minted}
 
 \needspace{16\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Lexicographically Smallest Cyclic Shift}
 \addcontentsline{toc}{subsection}{Lexicographically Smallest Cyclic Shift}
 \begin{minted}{cpp}
@@ -4472,7 +4680,8 @@ string smallestCyclicShift(const string& s) {
 \end{minted}
 
 \needspace{17\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Longest Common Substring of 2 Strings}
 \addcontentsline{toc}{subsection}{Longest Common Substring of 2 Strings}
 \begin{minted}{cpp}
@@ -4493,7 +4702,8 @@ string lcs(string& a, string& b) {
 \end{minted}
 
 \needspace{3\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Longest Common Substring of Several Strings}
 \addcontentsline{toc}{subsection}{Longest Common Substring of Several Strings}
 \begin{minted}{cpp}
@@ -4512,7 +4722,8 @@ int main() {
 \end{minted}
 
 \needspace{7\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Number of Ocurrences Of Several Words}
 \addcontentsline{toc}{subsection}{Number of Ocurrences Of Several Words}
 \begin{minted}{cpp}
@@ -4550,7 +4761,8 @@ vector<int> nOcurrences(string& t,
 \end{minted}
 
 \needspace{6\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Ocurrences Positions Of Several Words}
 \addcontentsline{toc}{subsection}{Ocurrences Positions Of Several Words}
 \begin{minted}{cpp}
@@ -4592,7 +4804,8 @@ vector<vector<int>> ocurrencesPos(
 \end{minted}
 
 \needspace{8\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Rabin Karp}
 \addcontentsline{toc}{subsection}{Rabin Karp}
 \begin{minted}{cpp}
@@ -4657,20 +4870,22 @@ vector<int> rabinKarp(RollingHash &rhStr,
 }
 \end{minted}
 
-\needspace{20\baselineskip}
-\sectionfont{\bfseries\sffamily\centering\Huge}
+\needspace{21\baselineskip}
+\sectionfont{\centering\bfseries\Huge}
 \vspace{1em}
 \section*{Techniques}
 \markboth{TECHNIQUES}{}
 \addcontentsline{toc}{section}{Techniques}
 \vspace{3em}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Array Compression (Coordinate Compression)}
 \addcontentsline{toc}{subsection}{Array Compression (Coordinate Compression)}
 \begin{minted}{cpp}
 // c = compressed
-unordered_map<T, int> Map;
-unordered_map<int, T> imap;
+typedef int T;
+map<T, int> Map;
+map<int, T> imap;
 
 template <class T> // don't pass n as param
 vector<int> compress(vector<T>& v, int n = 0) {
@@ -4684,14 +4899,15 @@ vector<int> compress(vector<T>& v, int n = 0) {
 \end{minted}
 
 \needspace{8\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Map Value To Int}
 \addcontentsline{toc}{subsection}{Map Value To Int}
 \begin{minted}{cpp}
 // val = value
 typedef string Val;
-unordered_map<Val, int> intForVal;
-unordered_map<int, Val> valForInt;
+map<Val, int> intForVal;
+map<int, Val> valForInt;
 int mapId = 0;
 \end{minted}
 \vspace{-12pt}
@@ -4716,12 +4932,13 @@ void initMapping() {
 \end{minted}
 
 \needspace{15\baselineskip}
-\subsectionfont{\bfseries\sffamily\centering\LARGE}
+\subsectionfont{\centering\bfseries\LARGE}
 \vspace{0em}
 \subsection*{Binary Search}
 \addcontentsline{toc}{subsection}{Binary Search}
 \vspace{2em}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Binary Search}
 \addcontentsline{toc}{subsubsection}{Binary Search}
 \begin{minted}{cpp}
@@ -4741,7 +4958,7 @@ if e not in v and inv = true it means that:
 \begin{minted}{cpp}
 // O(lg(r - l)) [l, r]
 template <class T>
-vector<T> bSearch(vector<T> &v, T e, int l, int r,
+vector<T> bSearch(vector<T> &v, int l, int r, T e,
                   bool lower = 0, bool inv = 0) {
   int ll = l, rr = r;
   while (l <= r) {
@@ -4758,7 +4975,8 @@ vector<T> bSearch(vector<T> &v, T e, int l, int r,
 \end{minted}
 
 \needspace{4\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Bitonic Search}
 \addcontentsline{toc}{subsubsection}{Bitonic Search}
 \begin{minted}{cpp}
@@ -4791,7 +5009,8 @@ vector<vector<int>> bitonicSearch(vector<T> &v, T e) {
 \end{minted}
 
 \needspace{12\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{C++ lower bound}
 \addcontentsline{toc}{subsubsection}{C++ lower bound}
 \begin{minted}{cpp}
@@ -4799,8 +5018,8 @@ vector<vector<int>> bitonicSearch(vector<T> &v, T e) {
 // ans[1] = index pointing to the first element in
 // the range [l, r) which compares >= to e.
 template <class T>
-vector<int> lowerBound(vector<T>& v, T e, int l,
-                       int r) {
+vector<int> lowerBound(vector<T>& v, int l, int r,
+                       T e) {
   auto it = v.begin();
   int i = lower_bound(it + l, it + r, e) - it;
   return {v[i] == e, i};
@@ -4808,7 +5027,8 @@ vector<int> lowerBound(vector<T>& v, T e, int l,
 \end{minted}
 
 \needspace{12\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{C++ upper bound}
 \addcontentsline{toc}{subsubsection}{C++ upper bound}
 \begin{minted}{cpp}
@@ -4816,8 +5036,8 @@ vector<int> lowerBound(vector<T>& v, T e, int l,
 // ans[1] = index pointing to the first element in
 // the range [l, r) which compares > to e.
 template <class T>
-vector<int> upperBound(vector<T>& v, T e, int l,
-                       int r) {
+vector<int> upperBound(vector<T>& v, int l, int r,
+                       T e) {
   auto it = v.begin();
   int i = upper_bound(it + l, it + r, e) - it;
   return {v[i - 1] == e, i};
@@ -4825,7 +5045,8 @@ vector<int> upperBound(vector<T>& v, T e, int l,
 \end{minted}
 
 \needspace{17\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Lower Bound}
 \addcontentsline{toc}{subsubsection}{Lower Bound}
 \begin{minted}{cpp}
@@ -4835,8 +5056,8 @@ vector<int> upperBound(vector<T>& v, T e, int l,
 
 // O(lg(r - l)) [l, r]
 template <class T>
-vector<int> lowerBound(vector<T>& v, T e, int l,
-                       int r) {
+vector<int> lowerBound(vector<T>& v, int l, int r,
+                       T e) {
   int rr = r;
   while (l <= r) {
     int mid = l + (r - l) >> 1;
@@ -4847,7 +5068,8 @@ vector<int> lowerBound(vector<T>& v, T e, int l,
 \end{minted}
 
 \needspace{17\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Upper Bound}
 \addcontentsline{toc}{subsubsection}{Upper Bound}
 \begin{minted}{cpp}
@@ -4857,8 +5079,8 @@ vector<int> lowerBound(vector<T>& v, T e, int l,
 
 // O(lg(r - l)) [l, r]
 template <class T>
-vector<int> upperBound(vector<T>& v, T e, int l,
-                       int r) {
+vector<int> upperBound(vector<T>& v, int l, int r,
+                       T e) {
   int ll = l;
   while (l <= r) {
     int mid = l + (r - l) >> 1;
@@ -4869,12 +5091,13 @@ vector<int> upperBound(vector<T>& v, T e, int l,
 \end{minted}
 
 \needspace{7\baselineskip}
-\subsectionfont{\bfseries\sffamily\centering\LARGE}
+\subsectionfont{\centering\bfseries\LARGE}
 \vspace{0em}
 \subsection*{Multiple Queries}
 \addcontentsline{toc}{subsection}{Multiple Queries}
 \vspace{2em}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Mo}
 \addcontentsline{toc}{subsubsection}{Mo}
 \begin{minted}{cpp}
@@ -4955,7 +5178,8 @@ int main() {
 \end{minted}
 
 \needspace{6\baselineskip}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{SQRT Decomposition}
 \addcontentsline{toc}{subsubsection}{SQRT Decomposition}
 \begin{minted}{cpp}
@@ -5035,13 +5259,14 @@ int main() {
 \end{minted}
 
 \needspace{18\baselineskip}
-\sectionfont{\bfseries\sffamily\centering\Huge}
+\sectionfont{\centering\bfseries\Huge}
 \vspace{1em}
 \section*{Trees And Heaps}
 \markboth{TREES AND HEAPS}{}
 \addcontentsline{toc}{section}{Trees And Heaps}
 \vspace{3em}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Red Black Tree}
 \addcontentsline{toc}{subsection}{Red Black Tree}
 \begin{minted}{cpp}
@@ -5137,7 +5362,8 @@ struct RedBlackTree {
 \end{minted}
 
 \needspace{13\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Treap}
 \addcontentsline{toc}{subsection}{Treap}
 \begin{minted}{cpp}
@@ -5311,7 +5537,8 @@ struct Treap {
 \end{minted}
 
 \needspace{6\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Treap (Implicit)}
 \addcontentsline{toc}{subsection}{Treap (Implicit)}
 \begin{minted}{cpp}
@@ -5552,7 +5779,7 @@ struct ImplicitTreap {
     op(l, r, [&](Node *&t) { ans = t->sum; });
     return ans;
   }
-\end{minted}
+  \end{minted}
 \vspace{-12pt}
 \needspace{8\baselineskip}
 \begin{minted}{cpp}
@@ -5573,13 +5800,14 @@ struct ImplicitTreap {
 \end{minted}
 
 \needspace{16\baselineskip}
-\sectionfont{\bfseries\sffamily\centering\Huge}
+\sectionfont{\centering\bfseries\Huge}
 \vspace{1em}
 \section*{Util}
 \markboth{UTIL}{}
 \addcontentsline{toc}{section}{Util}
 \vspace{3em}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Ceil Of Division Between Integers}
 \addcontentsline{toc}{subsection}{Ceil Of Division Between Integers}
 \begin{minted}{cpp}
@@ -5595,7 +5823,8 @@ li ceil(li a, li b) {
 \end{minted}
 
 \needspace{15\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Compare 2 Strings}
 \addcontentsline{toc}{subsection}{Compare 2 Strings}
 \begin{minted}{cpp}
@@ -5614,7 +5843,8 @@ int comp(string &a, string &b) {
 \end{minted}
 
 \needspace{12\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Double Comparisons With Given Precision}
 \addcontentsline{toc}{subsection}{Double Comparisons With Given Precision}
 \begin{minted}{cpp}
@@ -5630,7 +5860,8 @@ bool lte(ld a, ld b) { return b - a >= -eps; }
 \end{minted}
 
 \needspace{12\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Floor Of Division Between Integers}
 \addcontentsline{toc}{subsection}{Floor Of Division Between Integers}
 \begin{minted}{cpp}
@@ -5646,15 +5877,30 @@ li floor(li a, li b) {
 \end{minted}
 
 \needspace{3\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Get Sign Of Number}
 \addcontentsline{toc}{subsection}{Get Sign Of Number}
 \begin{minted}{cpp}
 int sign(int x) { return x < 0 ? -1 : x > 0; }
 \end{minted}
 
+\needspace{8\baselineskip}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
+\subsection*{Modulo with negative numbers}
+\addcontentsline{toc}{subsection}{Modulo with negative numbers}
+\begin{minted}{cpp}
+typedef long long int li;
+
+// if m is positive the answer is positive
+// if m is negative the answer is negative
+li mod(li a, li m) { return (m + (a % m)) % m; }
+\end{minted}
+
 \needspace{9\baselineskip}
-\subsectionfont{\large\bfseries\sffamily\underline}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsectionfont{\fileTitleStyle}
 \subsection*{Number To String}
 \addcontentsline{toc}{subsection}{Number To String}
 \begin{minted}{cpp}
@@ -5667,23 +5913,24 @@ string toString(int n) {
 \end{minted}
 
 \end{multicols*}
-\sectionfont{\bfseries\sffamily\centering\Huge}
+\sectionfont{\centering\bfseries\Huge}
 \vspace{1em}
 \section*{Extras}
 \markboth{EXTRAS}{}
 \addcontentsline{toc}{section}{Extras}
 \vspace{3em}
-\subsectionfont{\bfseries\sffamily\centering\LARGE}
+\subsectionfont{\centering\bfseries\LARGE}
 \vspace{0em}
 \subsection*{Data Structures}
 \addcontentsline{toc}{subsection}{Data Structures}
 \vspace{2em}
-\subsubsectionfont{\bfseries\sffamily\centering\Large}
+\subsubsectionfont{\centering\bfseries\Large}
 \vspace{0em}
 \subsubsection*{Strings}
 \addcontentsline{toc}{subsubsection}{Strings}
 \vspace{2em}
-\paragraphfont{\large\bfseries\sffamily\underline}
+\paragraphfont{\centering\bfseries\large}
+\paragraphfont{\fileTitleStyle}
 \paragraph*{Suffix Automaton}
 \addcontentsline{toc}{paragraph}{Suffix Automaton}
 \vspace{1em}
@@ -5693,12 +5940,13 @@ string toString(int n) {
 \end{itemize}
 \begin{multicols*}{2}
 \end{multicols*}
-\subsectionfont{\bfseries\sffamily\centering\LARGE}
+\subsectionfont{\centering\bfseries\LARGE}
 \vspace{0em}
 \subsection*{C++}
 \addcontentsline{toc}{subsection}{C++}
 \vspace{2em}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Automatic Type Conversions}
 \addcontentsline{toc}{subsubsection}{Automatic Type Conversions}
 \vspace{1em}
@@ -5800,7 +6048,8 @@ long double
 Source: \textcolor{prussianblue}{https://en.cppreference.com/w/c/language/conversion}
 \begin{multicols*}{2}
 \end{multicols*}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Integer Types Properties}
 \addcontentsline{toc}{subsubsection}{Integer Types Properties}
 \vspace{1em}
@@ -5841,7 +6090,7 @@ short int, unsigned short int
 \tabularnewline \hline
 At least \textbf{16}
 &
-\begin{minipage}[c]{\linewidth}
+\begin{minipage}[c]{5cm}
 \begin{minted}{cpp}
 int, unsigned int
 \end{minted}
@@ -5875,13 +6124,71 @@ Sources:\\
 \textcolor{prussianblue}{https://www.geeksforgeeks.org/c-data-types/}\\
 \textcolor{prussianblue}{https://stackoverflow.com/questions/2064550/c-why-bool-is-8-bits-long}
 \begin{multicols*}{2}
+\needspace{5\baselineskip}
+\subsectionfont{\centering\bfseries\LARGE}
+\vspace{0em}
+\subsection*{Generators}
+\addcontentsline{toc}{subsection}{Generators}
+\vspace{2em}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
+\subsubsection*{Tree Generator}
+\addcontentsline{toc}{subsubsection}{Tree Generator}
+\begin{minted}{py}
+from random import randint
+from sys import stdout
+import subprocess
+
+n = randint(2, 10)
+cout = f"{n}\n"
+for i in range(n):
+    if i:
+        cout += " "
+    cout += f"{randint(1, 10)}"
+
+cout += "\n"
+
+for i in range(2, n + 1):
+    u = i
+    v = randint(1, i - 1)
+    cout += f"{u} {v}\n"
+
+with open('in', 'r') as f: cout = f.read()
+
+stdout.write(cout)
+stdout.write("================\n")
+
+with open('in', 'w+') as f: f.write(cout)
+
+# subprocess.run("g++ -std=c++14 sol.cpp -o sol", shell=True)
+# subprocess.run("g++ -std=c++14 brute.cpp -o brute", shell=True)
+subprocess.run("./brute < in > outb && ./sol < in > outs", shell=True)
+with open('outb', 'r') as f:
+    ans1 = f.read()
+ans1 = ans1.split('\n')[:-1]
+with open('outs', 'r') as f:
+    ans2 = f.read()
+
+ans2 = ans2.split('\n')[:-1]
+for i in range(max(len(ans1), len(ans2))):
+    left = "--"
+    right = "--"
+    if (i < len(ans1)): left = ans1[i]
+    if (i < len(ans2)): right = ans2[i]
+    stdout.write(f"{left: <7} |  {right}\n")
+stdout.write('\n')
+
+# subprocess.run("diff outb outs", shell=True)
+\end{minted}
+
 \end{multicols*}
-\subsectionfont{\bfseries\sffamily\centering\LARGE}
+\subsectionfont{\centering\bfseries\LARGE}
 \vspace{0em}
 \subsection*{Maths}
 \addcontentsline{toc}{subsection}{Maths}
 \vspace{2em}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Common Sums}
 \addcontentsline{toc}{subsubsection}{Common Sums}
 \vspace{1em}
@@ -5933,7 +6240,8 @@ Sources:\\
 \vspace{1em}
 \begin{multicols*}{2}
 \end{multicols*}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Logarithm Rules}
 \addcontentsline{toc}{subsubsection}{Logarithm Rules}
 \vspace{1em}
@@ -5962,67 +6270,150 @@ Sources:\\
 \egroup
 \vspace{1em}
 \begin{multicols*}{2}
-\needspace{20\baselineskip}
-\sectionfont{\bfseries\sffamily\centering\Huge}
+\end{multicols*}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
+\subsubsection*{Permutation Formula}
+\addcontentsline{toc}{subsubsection}{Permutation Formula}
+\vspace{1em}
+\sffamily
+\bgroup
+
+The number of permutations of $n$ elements with $x_1$ identical elements of type $1$,
+$x_2$ identical elements of type 2, $\cdots$, and $x_k$ identical elements of type $k$ is:
+
+$$\frac{n!}{x_1! \cdot x_2! \cdot ... \cdot x_k!}$$
+
+Note: Extra available spaces $S$ can be considered as $S$ identical elements of type $space$.
+
+\egroup
+\vspace{1em}
+\begin{multicols*}{2}
+\end{multicols*}
+\subsubsectionfont{\centering\bfseries\Large}
+\vspace{0em}
+\subsubsection*{Trigonometry}
+\addcontentsline{toc}{subsubsection}{Trigonometry}
+\vspace{2em}
+\paragraphfont{\centering\bfseries\large}
+\paragraphfont{\fileTitleStyle}
+\paragraph*{Area Of A Triangle}
+\addcontentsline{toc}{paragraph}{Area Of A Triangle}
+\vspace{1em}
+\sffamily
+\bgroup
+
+$$\frac{1}{2} ab \cdot sin(\theta)$$
+
+- Where $\theta$ is the angle between side $a$ and side $b$.
+\egroup
+\vspace{1em}
+\begin{multicols*}{2}
+\end{multicols*}
+\paragraphfont{\centering\bfseries\large}
+\paragraphfont{\fileTitleStyle}
+\paragraph*{Law Of Cosines}
+\addcontentsline{toc}{paragraph}{Law Of Cosines}
+\vspace{1em}
+\sffamily
+\bgroup
+
+$$c^2 = a^2 + b^2 - 2 a b \cdot cos(\theta)$$
+
+- Where $\theta$ is the angle between the sides $a$ and $b$.
+
+\egroup
+\vspace{1em}
+\begin{multicols*}{2}
+\end{multicols*}
+\paragraphfont{\centering\bfseries\large}
+\paragraphfont{\fileTitleStyle}
+\paragraph*{Law Of Sines}
+\addcontentsline{toc}{paragraph}{Law Of Sines}
+\vspace{1em}
+\sffamily
+\bgroup
+
+$$\frac{a}{sin(\alpha)} = \frac{b}{sin(\beta)} = \frac{c}{sin(\sigma)}$$
+
+- Where $\alpha$ is the opposite angle of the side $a$, $\beta$ the opposite angle of the side $b$
+and $\sigma$ is the opposite angle of the side $c$.
+
+\egroup
+\vspace{1em}
+\begin{multicols*}{2}
+\needspace{18\baselineskip}
+\sectionfont{\centering\bfseries\Huge}
 \vspace{1em}
 \section*{Problems Solved}
 \markboth{PROBLEMS SOLVED}{}
 \addcontentsline{toc}{section}{Problems Solved}
 \vspace{3em}
-\subsectionfont{\bfseries\sffamily\centering\LARGE}
+\subsectionfont{\centering\bfseries\LARGE}
 \vspace{0em}
 \subsection*{Arrays}
 \addcontentsline{toc}{subsection}{Arrays}
 \vspace{2em}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
 \subsubsection*{Inversions Count}
 \addcontentsline{toc}{subsubsection}{Inversions Count}
 \begin{minted}{cpp}
+typedef long long int li;
 #include "../../Ranges/Data Structures/BIT.cpp"
 
-li invCount(vector<li>& v) {
+li invCount(vector<li>& v, li ans = 0) {
   BIT<int> bit(*max_element(v.begin(), v.end()) + 1);
-  li ans = 0;
-  rep(i, v.size()) {
-    ans += i - bit.query(v[i]);
-    bit.update(v[i], 1);
-  }
+  for (int i = 0; i < v.size(); i++)
+    ans += i - bit.query(v[i]), bit.update(v[i], 1);
+  return ans;
+}
+\end{minted}
+\vspace{-12pt}
+\needspace{6\baselineskip}
+\begin{minted}{cpp}
+li invCount2(vector<li>& v, li ans = 0) {
+  BIT<int> bit(*max_element(v.begin(), v.end()) + 1);
+  for (int i = v.size() - 1; ~i; i--)
+    ans += bit.query(v[i] - 1), bit.update(v[i], 1);
   return ans;
 }
 \end{minted}
 
-\needspace{25\baselineskip}
-\subsectionfont{\bfseries\sffamily\centering\LARGE}
+\needspace{26\baselineskip}
+\subsectionfont{\centering\bfseries\LARGE}
 \vspace{0em}
 \subsection*{Maths}
 \addcontentsline{toc}{subsection}{Maths}
 \vspace{2em}
-\subsubsectionfont{\large\bfseries\sffamily\underline}
-\subsubsection*{N as Sum of different numbers from 1 to M}
-\addcontentsline{toc}{subsubsection}{N as Sum of different numbers from 1 to M}
+\subsubsectionfont{\centering\bfseries\Large}
+\subsubsectionfont{\fileTitleStyle}
+\subsubsection*{N As Sum Of Consecutive Numbers}
+\addcontentsline{toc}{subsubsection}{N As Sum Of Consecutive Numbers}
 \begin{minted}{cpp}
 int main() {
-  int t;
-  scanf("%d", &t);
-  for (int j = 1; j <= t; j++) {
-    lli x;
-    scanf("%lld", &x);
-    lli count = 0;
-    V divisors = getDivisors(2LL * x);
-    for (auto &div : divisors) {
-      double d =
-          ((double)x / div) + ((1.00 - div) / 2.00);
-      if (d > 0 && div > 1 && d == floor(d) &&
-          div < x &&
-          (2 * d * div + (div - 1) * div == 2 * x)) {
-        count++;
-      }
-    }
-    printf("case %d: %lld\n", j, count);
+  long long int x;
+  cin >> x;
+  auto divs = getDivisors(2 * x);
+  int cnt = 0;
+  auto check = [&](long long int a, long long int b) {
+    long long int r = a - 1;
+    if (r < 1 or (b - r) % 2 != 0) return false;
+    long long int d = (b - r) / 2;
+    if (d <= 0) return false;
+    for (int i = 0; i <= r; i++)
+      cout << d + i << " \n"[i == r];
+    return true;
+  };
+  for (int i = 1; i < (int)divs.size(); i += 2) {
+    long long int a = divs[i - 1], b = divs[i];
+    if (check(a, b)) cnt++;
+    if (check(b, a)) cnt++;
   }
+  cout << cnt << endl;
 }
 \end{minted}
 
-
 \end{multicols*}
+
 \end{document}

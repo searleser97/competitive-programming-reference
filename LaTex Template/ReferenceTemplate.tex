@@ -20,10 +20,9 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage[inline]{enumitem}
+\usepackage{fontspec}
 
 \geometry{letterpaper, portrait, left=0.5cm, right=0.5cm, top=1.8cm, bottom=1cm}
-
-\sectionfont{\Huge\bfseries\sffamily}
 
 \setminted{
     style=tango,
@@ -61,17 +60,21 @@
 \definecolor{skobeloff}{rgb}{0.0, 0.48, 0.45}
 \definecolor{pinegreen}{rgb}{0.0, 0.47, 0.44}
 
+\newcommand{\fileTitleStyle}{\large\underline}
+
+\sectionfont{\centering\bfseries\Huge}
+\subsectionfont{\centering\bfseries\LARGE}
+\subsubsectionfont{\centering\bfseries\Large}
+\paragraphfont{\centering\bfseries\large}
+
+\setmainfont{Computer Modern Sans Serif}
+
 \begin{document}
 \includepdf{"/home/san/Projects/competitive-programming-reference/LaTex Template/TitlePage/TitlePage.pdf"}
-\null
 \thispagestyle{empty}
-\newpage
-\fontfamily{lmss}
-\selectfont
+\cleardoublepage
 \begin{multicols*}{2}
-	\tableofcontents
-	\newpage
-	\cleardoublepage
-	CODE HERE
+    \tableofcontents
 \end{multicols*}
+CODE HERE
 \end{document}

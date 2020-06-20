@@ -3,8 +3,8 @@
 // ans[1] = index pointing to the first element in
 // the range [l, r) which compares >= to e.
 template <class T>
-vector<int> lowerBound(vector<T>& v, T e, int l,
-                       int r) {
+vector<int> lowerBound(vector<T>& v, int l, int r,
+                       T e) {
   auto it = v.begin();
   int i = lower_bound(it + l, it + r, e) - it;
   return {v[i] == e, i};

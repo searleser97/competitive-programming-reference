@@ -1,12 +1,11 @@
-// 10
+// 9
 // pf = prime factors
 
 #include "../Number Theory/GCD.cpp"
 #include "./Is Prime Miller Rabin.cpp"
 
 typedef long long int li;
-// if li == __int128_t: use map<li, int> Map;
-typedef unordered_map<li, int> Map;
+typedef map<li, int> Map;
 
 li _abs(li a) { return a < 0 ? -a : a; }
 // 10

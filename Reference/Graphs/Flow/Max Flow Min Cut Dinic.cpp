@@ -1,40 +1,40 @@
-// 5
-// cap[a][b] = Capacity from a to b
-// flow[a][b] = flow occupied from a to b
+// 7
 // level[a] = level in graph of node a
-// iflow = initial flow, icap = initial capacity
 // pathMinCap = capacity bottleneck for a path (s->t)
+// icap = initial capacity, f[u] = flow of u
+// adj[u][i] = edge from u to v = adj[u][i]
+// cap[u][i] = capacity of edge u->adj[u][i]
+// rev[u][i] = index of u in adj[v]
+// rev is used to find the corresponding reverse edge
 // 5
 typedef int T;
+const T inf = 1 << 30;
+vector<vector<int>> adj, rev;
+vector<vector<T>> cap;
 vector<int> level;
-vector<vector<int>> adj;
-vector<vector<T>> cap, flow;
-T inf = 1 << 30;
-// 5
+// 4
 void init(int N) {
-  adj.assign(N, vector<int>());
-  cap.assign(N, vector<int>(N));
-  flow.assign(N, vector<int>(N));
+  adj = rev = vector<vector<int>>(N);
+  cap = vector<vector<T>>(N);
 }
 // 7
-void addEdge(int u, int v, T icap, T iflow = 0) {
-  if (!cap[u][v])
-    adj[u].push_back(v), adj[v].push_back(u);
-  cap[u][v] = icap;
-  // cap[v][u] = icap; // if graph is undirected
-  flow[u][v] += iflow, flow[v][u] -= iflow;
+// Assumes Directed Graph
+void addEdge(int u, int v, T icap) {
+  rev[u].push_back(adj[v].size());
+  rev[v].push_back(adj[u].size());
+  adj[u].push_back(v), adj[v].push_back(u);
+  cap[u].push_back(icap), cap[v].push_back(0);
 }
 // 17
 bool levelGraph(int s, int t) {
   level.assign(adj.size(), 0);
-  level[s] = 1;
   queue<int> q;
-  q.push(s);
+  level[s] = 1, q.push(s);
   while (!q.empty()) {
-    int u = q.front();
-    q.pop();
-    for (int &v : adj[u]) {
-      if (!level[v] && flow[u][v] < cap[u][v]) {
+    int u = q.front(); q.pop();
+    for (int i = 0; i < adj[u].size(); i++) {
+      int v = adj[u][i];
+      if (!level[v] && cap[u][i]) {
         q.push(v);
         level[v] = level[u] + 1;
       }
@@ -45,20 +45,20 @@ bool levelGraph(int s, int t) {
 // 14
 T blockingFlow(int u, int t, T pathMinCap) {
   if (u == t) return pathMinCap;
-  for (int v : adj[u]) {
-    T capLeft = cap[u][v] - flow[u][v];
-    if (level[v] == (level[u] + 1) && capLeft > 0)
+  for (int i = 0; i < adj[u].size(); i++) {
+    int v = adj[u][i];
+    if (level[v] == (level[u] + 1) && cap[u][i])
       if (T pathMaxFlow = blockingFlow(
-          v, t, min(pathMinCap, capLeft))) {
-        flow[u][v] += pathMaxFlow;
-        flow[v][u] -= pathMaxFlow;
+          v, t, min(pathMinCap, cap[u][i]))) {
+        cap[u][i] -= pathMaxFlow;
+        cap[v][rev[u][i]] += pathMaxFlow;
         return pathMaxFlow;
       }
   }
   return 0;
 }
 // 9
-// O(E * V^2)
+// O(V^2 * E)
 T maxFlowMinCut(int s, int t) {
   if (s == t) return inf;
   T maxFlow = 0;

@@ -1,8 +1,8 @@
 // 5
 // val = value
 typedef string Val;
-unordered_map<Val, int> intForVal;
-unordered_map<int, Val> valForInt;
+map<Val, int> intForVal;
+map<int, Val> valForInt;
 int mapId = 0;
 // 5
 int Map(Val val) {

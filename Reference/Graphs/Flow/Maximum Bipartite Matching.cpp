@@ -7,5 +7,5 @@ void addEdgeMBM(int u, int v) {
   addEdge(v, 1, 1);
 }
 // 2
-// O(E * V^2)
+// O(V^2 * E)
 T mbm() { return maxFlowMinCut(0, 1); }

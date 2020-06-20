@@ -1,14 +1,12 @@
-// 4
+// 3
 struct Object {
-  char first;
-  int second;
+  int x, y;
 };
-// 8
+// 7
 int main() {
   auto cmp = [](const Object& a, const Object& b) {
-    return a.second > b.second;
+    return a.x > b.x;
   };
   priority_queue<Object, vector<Object>,
-                 decltype(cmp)>
-      pq(cmp);
+                 decltype(cmp)> pq(cmp);
 }

@@ -72,11 +72,14 @@ struct Point {
   bool isPerpendicularWith(const Point &p) {
     return dot(p);
   }
-  // 5
-  // ans > 0 p is on the left
-  // ans < 0 p is on the right
-  // ans == 0 p has our same direction
-  ld positionOf(const Point &p) { return cross(p); }
+  // 7
+  // 1 p is on the left
+  // -1 p is on the right
+  // 0 p has our same direction
+  ld positionOf(const Point &p) {
+    short pos = cross(p);
+    return lt(pos, 0) ? -1 : gt(pos, 0);
+  }
 };
 // 3
 istream &operator>>(istream &is, Point &p) {

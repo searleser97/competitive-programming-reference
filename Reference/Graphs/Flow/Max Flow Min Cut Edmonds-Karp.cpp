@@ -1,55 +1,54 @@
-// 5
-// cap[a][b] = Capacity left from a to b
-// iflow = initial flow, icap = initial capacity
-// pathMinCap = capacity bottleneck for a path (s->t)
+// 6
+// icap = initial capacity, f[u] = flow of u
+// adj[u][i] = edge from u to v = adj[u][i]
+// cap[u][i] = capacity of edge u->adj[u][i]
+// rev[u][i] = index of u in adj[v]
+// rev is used to find the corresponding reverse edge
+// s = source, t = target
 // 4
 typedef int T;
-vector<int> level;
-vector<vector<int>> adj, cap;
-T inf = 1 << 30;
+vector<vector<int>> adj, rev;
+vector<vector<T>> cap;
+const T inf = 1 << 30;
 // 4
 void init(int N) {
-  adj.assign(N, vector<int>());
-  cap.assign(N, vector<int>(N));
+  adj = rev = vector<vector<int>>(N);
+  cap = vector<vector<T>>(N);
 }
-// 6
-void addEdge(int u, int v, T icap, T iflow = 0) {
-  if (!cap[u][v])
-    adj[u].push_back(v), adj[v].push_back(u);
-  cap[u][v] = icap - iflow;
-  // cap[v][u] = cap[u][v]; // if graph is undirected
+// 7
+// Assumes Directed Graph
+void addEdge(int u, int v, T icap) {
+  rev[u].push_back(adj[v].size());
+  rev[v].push_back(adj[u].size());
+  adj[u].push_back(v), adj[v].push_back(u);
+  cap[u].push_back(icap), cap[v].push_back(0);
 }
-// 19
-// O(N)
-T bfs(int s, int t, vector<int> &dad) {
-  dad.assign(adj.size(), -1);
-  queue<pair<int, T>> q;
-  dad[s] = s, q.push(s);
-  while (q.size()) {
-    int u = q.front().first;
-    T pathMinCap = q.front().second;
-    q.pop();
-    for (int v : adj[u])
-      if (dad[v] == -1 && cap[u][v]) {
-        dad[v] = u;
-        T flow = min(pathMinCap, cap[u][v]);
-        if (v == t) return flow;
-        q.push({v, flow});
-      }
-  }
-  return 0;
-}
-// 14
-// O(E^2 * V)
+// 29
+// O(V * E^2)
 T maxFlowMinCut(int s, int t) {
+  if (s == t) return inf;
   T maxFlow = 0;
-  vector<int> dad;
-  while (T flow = bfs(s, t, dad)) {
-    maxFlow += flow;
-    int u = t;
-    while (u != s) {
-      cap[dad[u]][u] -= flow, cap[u][dad[u]] += flow;
-      u = dad[u];
+  vector<T> f(adj.size());
+  while (true) {
+    vector<pair<int, int>> dad(adj.size(), {-1, -1});
+    queue<int> q;
+    q.push(s), f[s] = inf;
+    while (q.size() && dad[t].first == -1) {
+      int u = q.front(); q.pop();
+      for (int i = 0; i < adj[u].size(); i++) {
+        int v = adj[u][i];
+        if (dad[v].first == -1 && cap[u][i]) {
+          f[v] = min(f[u], cap[u][i]);
+          q.push(v), dad[v] = {u, i};
+        }
+      }
+    }
+    if (dad[t].first == -1) break;
+    maxFlow += f[t];
+    for (int v = t; v != s; v = dad[v].first) {
+      auto u = dad[v];
+      cap[u.first][u.second] -= f[t];
+      cap[v][rev[u.first][u.second]] += f[t];
     }
   }
   return maxFlow;

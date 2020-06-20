@@ -1,7 +1,8 @@
-// 13
+// 14
 // c = compressed
-unordered_map<T, int> Map;
-unordered_map<int, T> imap;
+typedef int T;
+map<T, int> Map;
+map<int, T> imap;
 
 template <class T> // don't pass n as param
 vector<int> compress(vector<T>& v, int n = 0) {

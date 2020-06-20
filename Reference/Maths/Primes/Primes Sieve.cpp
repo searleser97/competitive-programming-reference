@@ -1,4 +1,8 @@
-// 13
+// 18
+// sieve[i] = lowest prime factor of i
+// sieve[even number] = 0
+// sieve[prime] = 0
+
 vector<int> sieve, primes;
 
 // ~O(N * lg(lg(N)))
@@ -10,6 +14,6 @@ void primeSieve(int n) {
       for (int j = i * i; j <= n; j += 2 * i)
         if (!sieve[j]) sieve[j] = i;
   primes.push_back(2);
-  for (int i = 3; i < n; i++)
+  for (int i = 3; i <= n; i++)
     if (!sieve[i] && (i & 1)) primes.push_back(i);
 }

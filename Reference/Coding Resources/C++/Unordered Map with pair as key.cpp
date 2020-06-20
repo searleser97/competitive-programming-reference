@@ -10,7 +10,7 @@ struct pairhash {
 };
 // 5
 int main() {
-  unordered_map<pair<int, int>, T, hash_pair> um;
+  unordered_map<pair<int, int>, T, pairhash> um;
   um[{1, 2}] = 5;
   cout << um[{1, 2}] << endl;
 }

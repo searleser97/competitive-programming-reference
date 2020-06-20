@@ -1,7 +1,6 @@
-// 13
+// 12
 typedef long long int li;
-// if li == __int128_t: use map<li, int> Map;
-typedef unordered_map<li, int> Map;
+typedef map<li, int> Map;
 
 // ~O(sqrt(N) * lg(N))
 Map getPrimeFactors(li n) {
